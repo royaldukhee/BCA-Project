@@ -1,0 +1,89 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    text-align: center;
+    padding: 10px;
+    background-color: #f4f7f8;
+    color: #609ae7;
+    margin: 8px;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.information {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.information-container {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+.text {
+    margin-top: 40px;
+}
+
+.destination-countries-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+      margin-top: 20px;
+}
+
+.destination-country {
+    text-align: center;
+    width: 200px; 
+    margin: 10px;
+}
+
+.destination-country img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.destination-country h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.destination-country a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.destination-country a svg {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.destination-country img{
+     height: 120px;
+    width: 120px;
+}
+.destination-country h4{
+    margin: 0px;
+}
