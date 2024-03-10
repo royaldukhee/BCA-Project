@@ -1,3 +1,6 @@
+<?php
+    $key = $_GET['key'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,13 +14,20 @@
 <body>
     <h1>Abroad College Management System</h1>
     <div class="login-form">
-        <h2>Student Login</h2>
+        <h2>
+            <?php
+                echo ($key==1)?"Student Login":"College Login";
+            ?> </h2>
         <form>
             <div class="form-group">
-                <label>Username</label>
+                <label>
+                    <?php echo ($key==1)?"Username":"Email"; ?> 
+                </label>
                 <div class="group">
-                    <input type="text" class="form-control" id="username" placeholder="username" required>
-                </div>
+                <?php
+                echo ($key==1)?"<input type='text' class='form-control' id='username' placeholder='username' required>":"<input type='email' class='form-control' id='username' placeholder='email' required>";
+            ?>
+                    </div>
             </div>
             <div class="form-group">
                 <label>Password</label>
@@ -29,42 +39,31 @@
 
 
         </form>
-        <button type="button" onclick="submit()">Login</button>
+        <button onclick=login()>Login</button>
 
-        <p class="forget-password">Forget Password? <a href="../signup/signup.php"> Click-here</a></p>
-        <p class="register-p">Don't have an account? <a href="..\signup\signup.php"> Sign up</a></p>
+        <p class="forget-password">Forget Password? <a href=""> Click-here</a></p>
+        <p class="register-p">Don't have an account? <?php if($key==1){
+            echo '<a href="..\student-signup\student-signup.php"> Sign up</a>';
+        }
+        else {
+            echo '<a href="..\college-signup\college-signup.php"> Sign up</a>';
+        }
+        ?>
+        </p>
     </div>
 
 
 </body>
 <script>
-    function submit() {
-        // var request = new XMLHttpRequest();
-        // request.open("POST", "../includes/login.inc.php", true);
-        // const username = document.querySelector('#username').value;
-        // const password = document.querySelector('#password').value;
-        // const data={
-        //     username: username,
-        //     password: password};
-
-
-        // jsonstring=JSON.stringify(data);
-        // request.send(jsonstring);
-        // request.onload = function() {
-        //     let data = JSON.parse(this.response);
-        //     console.log(data);
-        //     document.querySelector('.error').innerHTML = data.message;
-        // }
+    function login() {
+               
         const username = document.querySelector('#username').value;
         const password = document.querySelector('#password').value;
-        const key = '<?php
-                 echo   $_GET['key'];
-                    ?>'
+       const key = <?php echo $key; ?>;
         const data = new FormData();
         data.append('username', username);
         data.append('password', password);
-        data.append('key',key);
-
+       data.append('key', key);
         fetch("../includes/login.inc.php", {
                 method: "post",
                 body: data,
@@ -81,7 +80,7 @@
                     // Redirect to the desired location
                     window.location.href = '../student-home/student-home.php';
                 } else {
-                    // console.log(text);
+                    console.log(text);
                     document.querySelector('.error').innerHTML = "<span style='color: red;'>" + text + "</span>";
                 }
             })

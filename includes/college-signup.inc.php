@@ -1,15 +1,15 @@
 <?php
 require('../includes/dbconnect.inc.php');
 file_get_contents("php://input");
- (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']));
+(isset($_POST['countryname']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['country']));
     require 'dbconnect.inc.php';
-
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $collegename = $_POST['collegename'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
+    $counrey = $_POST['country'];
 
-    $stmt = $conn->prepare("SELECT username FROM students WHERE username = ?");
-    $stmt->bind_param("s", $username);
+    $stmt = $conn->prepare("SELECT email FROM colleges WHERE email = ?");
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     
     if ($stmt->affected_rows > 0) {
@@ -19,9 +19,10 @@ file_get_contents("php://input");
         exit();
     } else {
         $passhash = password_hash($password, PASSWORD_DEFAULT);
-        $insstmt = $conn->prepare("INSERT INTO students (username, password, email) VALUES (?, ?, ?)");
-        $insstmt->bind_param("sss", $username, $passhash, $email);
+        $insstmt = $conn->prepare("INSERT INTO colleges (collegename, email, password, country) VALUES (?,?, ?, ?)");
+        $insstmt->bind_param("ssss",$countryname, $email, $passhash, $country);
         $insstmt->execute();
+        echo 'success';
         if ($insstmt->affected_rows > 0) {
             echo ("success");
             $insstmt->close();
