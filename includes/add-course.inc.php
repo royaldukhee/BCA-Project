@@ -1,0 +1,28 @@
+<?php
+$postdtata= file_get_contents("php://input");
+$_POST['level'];
+$_POST['coursename'];
+$_POST['duration'];
+$_POST['startdate'];
+$_POST['enddate'];
+$_POST['ilistening'];
+$_POST['ireading'];
+$_POST['iwriting'];
+$_POST['ispeaking'];
+$_POST['overallband'];
+$_POST['plistening'];
+$_POST['preading'];
+$_POST['pwriting'];
+$_POST['pspeaking'];
+$_POST['overallscore'];
+$_POST['sgpa'];
+$_POST['spercentage'];
+$_POST['hgpa'];
+$_POST['hpercentage'];
+$_POST['bgpa'];
+$_POST['bpercentage'];
+$_POST['pgpa'];
+$_POST['ppercentage'];
+$_POST['mgpa'];
+$_POST['mpercentage'];
+ print_r($postdtata);

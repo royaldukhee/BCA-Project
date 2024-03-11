@@ -16,12 +16,9 @@ body{
     left: 0;    
 
 }
-.nav-bar ul{
-    list-style: none;
-    padding: 0;
-    margin: 15px;
-}
-.nav-bar ul a{
+
+.nav-bar ul button{
+        width: 95px;
         text-decoration: none;
         color:black;
         display: block;
@@ -29,9 +26,10 @@ body{
         border-radius: 20px;
         background-color: #eaf0f8;
         margin-top: 10px;
+        margin-left: 0;
         
 }
-.nav-bar ul a:hover{
+.nav-bar ul button:hover{
     background-color: #c7116c;
 }
 .content{

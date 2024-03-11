@@ -11,11 +11,10 @@
 <body>
         <nav class="nav-bar">
         <ul>
-            <li><a href="college-home.php">Home</a></li>
-            <li><a href="addcourse.php">Add Courses</a></li>
-            <li><a href="#">Applications</a></li>
-            
-            <li><a href="college-logout.php">Logout</a></li>
+            <button>Home</button>
+            <button id="addcollege">Add Courses</button>
+            <button id ="application">Applications</button>
+            <button>Logout</button>
         </ul>
     </nav>
     <div class="content">
@@ -39,7 +38,26 @@
                 <p>Rejected</p>
             </div>
         </div>
+        <div class="applications">
+            <table>
+                <th>
+                    <td>Student Name</td>
+                    <td>Course</td>
+                    <td>Status</td>
+                    <td>View Documents</td>
+                </th>         
+                <tr>
+
+                </tr>
+            </table>
+        </div>
     </div>
+<script>
+    const addcollege = document.querySelector('#addcollege');
+    addcollege.addEventListener('click',()=>{
+        window.location.href = "../add-course/add-course.php";
+    });
+</script>
 </body>
 
 </html>

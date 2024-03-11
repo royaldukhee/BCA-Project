@@ -37,6 +37,8 @@ elseif($key=='2'){
         exit();
     } elseif (password_verify($password, $resuldata['password']) == true) {
         echo "success";
+        $_SESSION['collegeid']=$resuldata['collegeID'];
+        $_SESSION['collegename']=$resuldata['collegename'];
         exit();
     } else {
         echo "password doesn't match";
