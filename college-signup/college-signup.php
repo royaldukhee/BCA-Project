@@ -69,7 +69,7 @@
         const data = new FormData();
         data.append('collegename', collegename);
         data.append('email', email);
-        data.append('country', username);
+        data.append('country', country);
         data.append('password', password);
 
         try {

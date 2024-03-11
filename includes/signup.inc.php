@@ -1,36 +1,36 @@
 <?php
-require('../includes/dbconnect.inc.php');
-file_get_contents("php://input");
- (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']));
-    require 'dbconnect.inc.php';
+$postdata = json_decode(file_get_contents("php://input"), true);
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $email = $_POST['email'];
+if (isset($postdata['username']) && isset($postdata['email']) && isset($postdata['password'])) {
+    $username = $postdata['username'];
+    $email = $postdata['email'];
+    $country = $postdata['country'];
+    $password = $postdata['password'];
+    require_once '../includes/dbconnect.inc.php';
 
-    $stmt = $conn->prepare("SELECT username FROM students WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    
-    if ($stmt->affected_rows > 0) {
-        echo "User Already Exists";
-        $stmt->close();
-        $conn->close();
-        exit();
-    } else {
-        $passhash = password_hash($password, PASSWORD_DEFAULT);
-        $insstmt = $conn->prepare("INSERT INTO students (username, password, email) VALUES (?, ?, ?)");
-        $insstmt->bind_param("sss", $username, $passhash, $email);
-        $insstmt->execute();
-        if ($insstmt->affected_rows > 0) {
-            echo ("success");
-            $insstmt->close();
-            $conn->close();
+    $query = "SELECT username FROM students WHERE username = '$username'";
+
+    if ($result = $conn->query($query)) {
+        if ($result->num_rows > 0) {
+            echo "username already exists";
             exit();
         } else {
-            $insstmt->close();
-            $conn->close();
-            echo "Not Success";
-            exit();
+            $hashedpassword = password_hash($password, PASSWORD_DEFAULT);
+            $query1 = "INSERT INTO students (username, email, password) VALUES ('$username', '$email', '$hashedpassword')";
+
+            if ($conn->query($query1) === true) {
+                echo "success";
+                exit();
+            } else {
+                echo "error";
+                exit();
+            }
         }
+    } else {
+        echo "error";
+        exit();
     }
+} else {
+    echo "error";
+    exit();
+}
