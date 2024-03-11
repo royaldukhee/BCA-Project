@@ -12,40 +12,40 @@
     <h1>Abrod College Management System</h1>
     <div class="login-form">
         <h2>Sign Up Here</h2>
-<form >
             <div class="form-group">
                 <label>Username</label>
                 <div class="group">
-                     <input type="text" class="form-control" id="username" placeholder="username" onchange="resultremove()" required />
+                     <input type="text" class="form-control" id="username" placeholder="username" required />
                 </div>
             </div>
             
             <div class="form-group">
                 <label>Email</label>
                 <div class="group">
-                    <input type="email" class="form-control" id="email" placeholder="email" required onchnage="resultremove()">
+                    <input type="email" class="form-control" id="email" placeholder="email" required>
                 </div>
             </div>
             
             <div class="form-group">
                 <label>Password</label>
                 <div class="group">
-                    <input type="password" class="form-control" id="password" placeholder="password" require onchnage="resultremove()">
+                    <input type="password" class="form-control" id="password" placeholder="password" required>
                 </div>
             </div>
             <div class="form-group">
                 <label>Re-Password</label>
                 <div class="group">
                     
-                    <input type="password" class="form-control" id="re-password" placeholder="re-password" required onchnage="resultremove()">
+                    <input type="password" class="form-control" id="re-password" placeholder="re-password" required>
                     <div id="error"></div>
                 </div>
             </div>
             
            
 
-            <button onclick="signup()">Sign Up</button>
-        </form>
+            
+        
+        <button onclick="signup()">Sign Up</button>
         <p class="register-p">Already a member? <a href="../login/login.php?key=1"> Login</a></p>
     </div>
 <script>
