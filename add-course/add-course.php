@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Course</title>
-    <link rel="stylesheet" href="add-course.css" />
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="inner-container">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Course</title>
+  <link rel="stylesheet" href="add-course.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="inner-container" id="formSteps">
+      <div class="form-step" id="step1">
         <div class="input-section">
           <label for="level">Select Level</label>
           <select name="level" id="level" onchange="showhide()">
@@ -23,34 +25,28 @@
         <br />
         <div class="input-section">
           <label for="coursename">Course Name</label>
-          <input
-            type="text"
-            name="coursename"
-            id="coursename"
-            placeholder="coursename"
-            required
-          />
+          <input type="text" name="coursename" id="coursename" placeholder="coursename" required />
         </div>
         <br />
         <div class="input-section">
           <label for="duration">Duration</label>
-          <input
-            type="text"
-            name="duration"
-            id="duration"
-            placeholder="duration (in semester)"
-            required
-          />
+          <input type="text" name="duration" id="duration" placeholder="duration (in semester)" required />
         </div>
         <br />
         <div class="input-section">
           <label for="startdate">Start Date</label>
-          <input type="date" name="startdate" id="startdate" required />
+          <input type="date" name="startdate" id="startdate" required value="<?php echo date("Y-m-d") ?>" />
           <label for="enddate">End Date</label>
-          <input type="date" name="enddate" id="enddate" required />
+          <input type="date" name="enddate" id="enddate" required value="<?php echo date("Y-m-d") ?>" />
         </div>
         <br />
-
+        <div class="input-section">
+          <button onclick="nextstep(2)">
+            <span style="font-size:16px"> Next </span>
+          </button>
+        </div>
+      </div>
+      <div class="form-step hide" id="step2">
         <div class="input-section">
           <label for="courserequirements">Course Requirements:</label>
         </div>
@@ -60,45 +56,15 @@
           <label for="ielts">IELTS</label>
           <br />
           <label for="listening">Listening</label>
-          <input
-            type="number"
-            name="listening"
-            id="ilistening"
-            placeholder="Listening"
-            required
-          />
+          <input type="number" name="listening" id="ilistening" placeholder="Listening" required />
           <label for="reading">Reading</label>
-          <input
-            type="number"
-            name="reading"
-            id="ireading"
-            placeholder="Reading"
-            required
-          />
+          <input type="number" name="reading" id="ireading" placeholder="Reading" required />
           <label for="writing">Writing</label>
-          <input
-            type="number"
-            name="writing"
-            id="iwriting"
-            placeholder="Writing"
-            required
-          />
+          <input type="number" name="writing" id="iwriting" placeholder="Writing" required />
           <label for="speaking">Speaking</label>
-          <input
-            type="number"
-            name="speaking"
-            id="ispeaking"
-            placeholder="Speaking"
-            required
-          />
+          <input type="number" name="speaking" id="ispeaking" placeholder="Speaking" required />
           <label for="overall-band">Overall Band</label>
-          <input
-            type="number"
-            name="overallband"
-            id="overallband"
-            placeholder="Overall Band"
-            required
-          />
+          <input type="number" name="overallband" id="overallband" placeholder="Overall Band" required />
         </div>
 
         <br />
@@ -107,47 +73,28 @@
           <label for="pte">PTE</label>
           <br />
           <label for="listening">Listening</label>
-          <input
-            type="number"
-            name="listening"
-            id="plistening"
-            placeholder="Listening"
-            required
-          />
+          <input type="number" name="listening" id="plistening" placeholder="Listening" required />
           <label for="reading">Reading</label>
-          <input
-            type="number"
-            name="reading"
-            id="preading"
-            placeholder="Reading"
-            required
-          />
+          <input type="number" name="reading" id="preading" placeholder="Reading" required />
           <label for="writing">Writing</label>
-          <input
-            type="number"
-            name="writing"
-            id="pwriting"
-            placeholder="Writing"
-            required
-          />
+          <input type="number" name="writing" id="pwriting" placeholder="Writing" required />
           <label for="speaking">Speaking</label>
-          <input
-            type="number"
-            name="speaking"
-            id="pspeaking"
-            placeholder="Speaking"
-            required
-          />
+          <input type="number" name="speaking" id="pspeaking" placeholder="Speaking" required />
           <label for="overall-score">Overall Score </label>
-          <input
-            type="number"
-            name="overallscore"
-            id="overallscore"
-            placeholder="Overall Score"
-            required
-          />
+          <input type="number" name="overallscore" id="overallscore" placeholder="Overall Score" required />
         </div>
-        <br />
+        <div class="input-section">
+
+          <button onclick="previousStep(1)">
+            <span style="font-size:16px"> Previous </span>
+          </button>
+          <button onclick="nextstep(3)">
+            <span style="font-size:16px"> Next </span>
+          </button>
+        </div>
+      </div>
+      <br />
+      <div class="form-step hide" id="step3">
 
         <div class="input-section">
           <label for="academic-requirements">Academic Requirements:</label>
@@ -206,109 +153,156 @@
         </div>
 
         <div class="input-section">
-          <button onclick="addcourse">
+          <button onclick="previousStep(2)">
+            <span style="font-size:16px"> Previous </span>
+          </button>
+          <button onclick="addcourse()">
             <span style="font-size: 16px">Add Course</span>
           </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <style>
-      .hide {
-        display: none;
+  <style>
+    .hide {
+      display: none;
+    }
+  </style>
+  <script>
+    let currentstep = 1;
+    function nextstep(next) {
+      document.getElementById(`step${currentstep}`).classList.add('hide');
+      currentstep = next;
+      document.getElementById(`step${currentstep}`).classList.remove('hide');
+    }
+    let previousstep = 1;
+
+    function previousStep() {
+      currentstep--;
+      document.getElementById(`step${currentstep}`).classList.remove('hide');
+      document.getElementById(`step${currentstep+1}`).classList.add('hide');
+    }
+
+    function showhide() {
+      var level = document.getElementById("level").value;
+      if (level == "master") {
+        document.querySelector(".bachelor").classList.remove("hide");
+        document.querySelector(".master").classList.add("hide");
+      } else if (level == "phd") {
+        document.querySelector(".bachelor").classList.remove("hide");
+        document.querySelector(".master").classList.remove("hide");
+      } else {
+        document.querySelector(".bachelor").classList.add("hide");
+        document.querySelector(".master").classList.add("hide");
       }
-    </style>
-    <script>
-      function showhide() {
-        var level = document.getElementById("level").value;
-        if (level == "master") {
-          document.querySelector(".bachelor").classList.remove("hide");
-          document.querySelector(".master").classList.add("hide");
-          } else if (level == "phd") {
-          document.querySelector(".bachelor").classList.remove("hide");
-          document.querySelector(".master").classList.remove("hide");
+    }
+
+    function addcourse() {
+
+      const level = document.querySelector("#level").value;
+      const coursename = document.querySelector("#coursename").value;
+      const duration = document.querySelector("#duration").value;
+      const startdate = document.querySelector("#startdate").value;
+      const enddate = document.querySelector("#enddate").value;
+      const IELTS = {
+        listening: document.querySelector("#ilistening").value,
+        reading: document.querySelector("#ireading").value,
+        writing: document.querySelector("#iwriting").value,
+        speaking: document.querySelector("#ispeaking").value,
+        overal: document.querySelector("#overallband").value,
+      };
+
+      const PTE = {
+        listening: document.querySelector("#plistening").value,
+        reading: document.querySelector("#preading").value,
+        writing: document.querySelector("#pwriting").value,
+        speaking: document.querySelector("#pspeaking").value,
+        overall: document.querySelector("#overallscore").value,
+      }
+      const secondary = {
+        gpa: document.querySelector("#sgpa").value,
+        percentage: document.querySelector("#spercentage").value,
+      }
+      const higher_secondary = {
+        gpa: document.querySelector("#hgpa").value,
+        percentage: document.querySelector("#hpercentage").value,
+      }
+      const collegeID = <?php echo $_SESSION['collegeID'] ?>;
+      if (level == "master") {
+        const bachelor = {
+          gpa: document.querySelector("#bgpa").value,
+          percentage: document.querySelector("#bpercentage").value,
+        }
+        const academic = {
+          secondary: secondary,
+          higher_secondary: higher_secondary,
+          bachelor: bachelor,
+        }
+      } else if (level == "phd") {
+        const bachelor = {
+          gpa: document.querySelector("#bgpa").value,
+          percentage: document.querySelector("#bpercentage").value,
+        }
+        const master = {
+
+          gpa: document.querySelector("#mgpa").value,
+          percentage: document.querySelector("#mpercentage").value,
+        }
+
+        const academic = {
+          secondary: secondary,
+          higher_secondary: higher_secondary,
+          bachelor: bachelor,
+          master: master,
+        }
+
+      } else {
+        const academic = {
+          secondary: secondary,
+          higher_secondary: higher_secondary,
+        }
+      }
+        const data = {
+          level: level,
+          coursename: coursename,
+          duration: duration,
+          startdate: startdate,
+          enddate: enddate,
+          IELTS: IELTS,
+          PTE: PTE,
+          academic: academic,
+        }
+
+        if (confirm("Do You Want to really add") == true) {
+          try {
+            const response = fetch("../includes/add-course.inc.php", {
+              method: "post",
+              body: JSON.stringify(data),
+              headers:{
+                "Content-Type": "application/json"
+              },
+            });
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            const result = response.text();
+            if (result == "success") {
+              alert("Course Added Successfully");
+            } else {
+              alert("There has been a problem with your fetch operation");
+            }
+          } catch (error) {
+            console.error(
+              "There has been a problem with your fetch operation:",
+              error
+            );
+          }
         } else {
-          document.querySelector(".bachelor").classList.add("hide");
-          document.querySelector(".master").classList.add("hide");
+          alert("Declined");
         }
       }
-      function addcourse() {
-        const coursename = document.querySelector("#coursename").value;
-        const duration = document.querySelector("#duration").value;
-        const startdate = document.querySelector("#startdate").value;
-        const enddate = document.querySelector("#enddate").value;
-        const ilistening = document.querySelector("#ilistening").value;
-        const ireading = document.querySelector("#ireading").value;
-        const iwriting = document.querySelector("#iwriting").value;
-        const ispeaking = document.querySelector("#ispeaking").value;
-        const overallband = document.querySelector("#overallband").value;
+  </script>
+</body>
 
-        const plistening = document.querySelector("#plistening").value;
-        const preading = document.querySelector("#preading").value;
-        const pwriting = document.querySelector("#pwriting").value;
-        const pspeaking = document.querySelector("#pspeaking").value;
-        const overallscore = document.querySelector("#overallscore").value;
-
-        const sgpa = document.querySelector("#sgpa").value;
-        const spercentage = document.querySelector("#spercentage").value;
-        const hgpa = document.querySelector("#hgpa").value;
-        const hpercentage = document.querySelector("#hpercentage").value;
-        const bgpa = document.querySelector("#bgpa").value;
-        const bpercentage = document.querySelector("#bpercentage").value;
-        const pgpa = document.querySelector("#pgpa").value;
-        const ppercentage = document.querySelector("#ppercentage").value;
-
-        const data = new FormData();
-
-        data.append("coursename", coursename);
-        data.append("duration", duration);
-        data.append("startdate", startdate);
-        data.append("enddate", enddate);
-        data.append("ilistening", ilistening);
-        data.append("ireading", ireading);
-        data.append("iwriting", iwriting);
-        data.append("ispeaking", ispeaking);
-        data.append("overallband", overallband);
-
-        data.append("plistening", plistening);
-        data.append("preading", preading);
-        data.append("pwriting", pwriting);
-        data.append("pspeaking", pspeaking);
-        data.append("overallscore", overallscore);
-        data.append("sgpa", sgpa);
-        data.append("spercentage", spercentage);
-        data.append("hgpa", hgpa);
-        data.append("hpercentage", hpercentage);
-        if (level == "master") {
-          data.append("pgpa", pgpa);
-          data.append("ppercentage", ppercentage);
-        } else if (level == "phd") {
-          data.append("bgpa", bgpa);
-          data.append("bpercentage", mpercentage);
-          data.append("mgpa", mgpa);
-          data.append("mpercentage", mpercentage);
-        }
-        try {
-          const response = fetch("../includes/add-course.inc.php", {
-            method: "post",
-            body: data,
-          });
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          const result = response.text();
-          if (result == "success") {
-            alert("Course Added Successfully");
-          } else {
-            alert("There has been a problem with your fetch operation");
-          }
-        } catch (error) {
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          );
-        }
-      }
-    </script>
-  </body>
 </html>
