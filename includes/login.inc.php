@@ -12,12 +12,12 @@ if($key=='1'){
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    $resuldata = mysqli_fetch_assoc($result);
+    $resultdata = mysqli_fetch_assoc($result);
     if ($result->num_rows == 0) {
         echo "user not found";
-        die(mysqli_error($conn));
         exit();
-    } elseif (password_verify($password, $resuldata['password']) == true) {
+    } elseif (password_verify($password, $resultdata['password']) == true) {
+        $_SESSION['ID']=$resultdata['studentID'];
         echo "success";
         exit();
     } else {
@@ -30,15 +30,13 @@ elseif($key=='2'){
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    $resuldata = mysqli_fetch_assoc($result);
+    $resultdata = mysqli_fetch_assoc($result);
     if ($result->num_rows == 0) {
         echo "user not found";
-        die(mysqli_error($conn));
         exit();
-    } elseif (password_verify($password, $resuldata['password']) == true) {
+    } elseif (password_verify($password, $resultdata['password']) == true) {
+        $_SESSION['ID']=$resultdata['collegeID'];        
         echo "success";
-        $_SESSION['collegeid']=$resuldata['collegeID'];
-        $_SESSION['collegename']=$resuldata['collegename'];
         exit();
     } else {
         echo "password doesn't match";
