@@ -1,5 +1,7 @@
 <?php
 require('../includes/dbconnect.inc.php');
+require('../includes/session.inc.php');
+
 file_get_contents("php://input");
 if(isset($_POST['key'])){
     $key=$_POST['key'];
@@ -17,7 +19,7 @@ if($key=='1'){
         echo "user not found";
         exit();
     } elseif (password_verify($password, $resultdata['password']) == true) {
-        $_SESSION['ID']=$resultdata['studentID'];
+        $_SESSION['studentID']=$resultdata['studentID'];
         echo "success";
         exit();
     } else {
@@ -35,7 +37,7 @@ elseif($key=='2'){
         echo "user not found";
         exit();
     } elseif (password_verify($password, $resultdata['password']) == true) {
-        $_SESSION['ID']=$resultdata['collegeID'];        
+        $_SESSION['collegeID']=$resultdata['collegeID'];        
         echo "success";
         exit();
     } else {
