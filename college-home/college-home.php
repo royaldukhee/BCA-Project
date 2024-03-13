@@ -1,3 +1,8 @@
+<?php
+include_once('../nav/collegenav.php')
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,14 +14,6 @@
 </head>
 
 <body>
-        <nav class="nav-bar">
-        <ul>
-            <button>Home</button>
-            <button id="addcollege">Add Courses</button>
-            <button id ="application">Applications</button>
-            <button>Logout</button>
-        </ul>
-    </nav>
     <div class="content">
         <div class="text">
             <h1>Welcome to College Home</h1>
@@ -41,23 +38,23 @@
         <div class="applications">
             <table>
                 <th>
-                    <td>Student Name</td>
-                    <td>Course</td>
-                    <td>Status</td>
-                    <td>View Documents</td>
-                </th>         
+                <td>Student Name</td>
+                <td>Course</td>
+                <td>Status</td>
+                <td>View Documents</td>
+                </th>
                 <tr>
 
                 </tr>
             </table>
         </div>
     </div>
-<script>
-    const addcollege = document.querySelector('#addcollege');
-    addcollege.addEventListener('click',()=>{
-        window.location.href = "../add-course/add-course.php";
-    });
-</script>
+    <script>
+        const addcollege = document.querySelector('#addcollege');
+        addcollege.addEventListener('click', () => {
+            window.location.href = "../add-course/add-course.php";
+        });
+    </script>
 </body>
 
 </html>

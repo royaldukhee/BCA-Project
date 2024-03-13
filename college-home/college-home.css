@@ -5,33 +5,7 @@ body{
     padding: 0;
     box-sizing: border-box;
 }
-.nav-bar{
 
-    color: violet;
-    height: 100vh;
-    width: 150px;
-    background-color: #d9e9fa;
-    position: fixed;
-    top: 0;
-    left: 0;    
-
-}
-
-.nav-bar ul button{
-        width: 95px;
-        text-decoration: none;
-        color:black;
-        display: block;
-        padding: 5px;
-        border-radius: 20px;
-        background-color: #eaf0f8;
-        margin-top: 10px;
-        margin-left: 0;
-        
-}
-.nav-bar ul button:hover{
-    background-color: #c7116c;
-}
 .content{
     margin-top: 0px;
     margin-left: 200px;

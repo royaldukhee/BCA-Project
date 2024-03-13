@@ -1,5 +1,6 @@
 <?php
 require_once("../includes/session.inc.php");
+include_once("../nav/collegenav.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -192,7 +193,7 @@ require_once("../includes/session.inc.php");
         }
 
         function showhide() {
-            var level = document.getElementById("level").value;
+            let level = document.getElementById("level").value;
             if (level == "master") {
                 document.querySelector(".bachelor").classList.remove("hide");
                 document.querySelector(".master").classList.add("hide");
@@ -206,8 +207,7 @@ require_once("../includes/session.inc.php");
         }
 
         function addcourse() {
-
-            const level = document.querySelector("#level").value;
+            let level = document.getElementById("level").value;
             const coursename = document.querySelector("#coursename").value;
             const duration = document.querySelector("#duration").value;
             const startdate = document.querySelector("#startdate").value;
@@ -236,6 +236,7 @@ require_once("../includes/session.inc.php");
                 percentage: document.querySelector("#hpercentage").value,
             }
             const collegeID = <?php echo ( $_SESSION['collegeID']); ?>;
+            
             let academic;
             if (level == "master") {
                 const bachelor = {
@@ -272,6 +273,7 @@ require_once("../includes/session.inc.php");
                 }
             }
             const data = {
+                collegeID:collegeID,
                 level: level,
                 coursename: coursename,
                 duration: duration,
@@ -284,7 +286,7 @@ require_once("../includes/session.inc.php");
 
             if (confirm("Do You Want to really add") == true) {
                 try {
-                    const response = fetch("../includes/add-course.inc.php", {
+                    const response = fetch("../includes/add-course.inc.php/", {
                         method: "post",
                         body: JSON.stringify(data),
                         headers: {
@@ -295,6 +297,7 @@ require_once("../includes/session.inc.php");
                         throw new Error("Network response was not ok");
                     }
                     const result = response.text();
+                    console.log(result);
                     if (result == "success") {
                         alert("Course Added Successfully");
                     } else {
