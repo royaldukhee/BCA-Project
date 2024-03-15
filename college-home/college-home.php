@@ -20,18 +20,21 @@ include_once('../nav/collegenav.php')
         </div>
         <div class="main-container">
             <div class="status">
-                <p>Applications</p>
+               
                 <p>0</p>
+                <p>Applications</p>
                 <p>Pending </p>
             </div>
             <div class="status">
-                <p>Applications</p>
+                
                 <p>1</p>
+                <p>Applications</p>
                 <p>Approved </p>
             </div>
             <div class="status">
+               
+                <h3>0</h3>
                 <p>Applications</p>
-                <p>0</p>
                 <p>Rejected</p>
             </div>
         </div>
@@ -41,7 +44,6 @@ include_once('../nav/collegenav.php')
                 <td>Student Name</td>
                 <td>Course</td>
                 <td>Status</td>
-                <td>View Documents</td>
                 </th>
                 <tr>
 
@@ -50,10 +52,10 @@ include_once('../nav/collegenav.php')
         </div>
     </div>
     <script>
-        const addcollege = document.querySelector('#addcollege');
-        addcollege.addEventListener('click', () => {
-            window.location.href = "../add-course/add-course.php";
-        });
+        // const addcollege = document.querySelector('#addcollege');
+        // addcollege.addEventListener('click', () => {
+        //     window.location.href = "../add-course/add-course.php";
+        // });
     </script>
 </body>
 

@@ -13,7 +13,9 @@ include_once("../nav/collegenav.php");
 </head>
 
 <body>
+
     <div class="container">
+
         <div class="inner-container" id="formSteps">
 
             <div class="form-step" id="step1">
@@ -30,21 +32,31 @@ include_once("../nav/collegenav.php");
                 <br />
                 <div class="input-section">
                     <label for="coursename">Course Name</label>
-                    <input type="text" name="coursename" id="coursename" placeholder="coursename" required />
+                    <input type="text" name="coursename" id="coursename" placeholder="coursename" />
                 </div>
                 <br />
+                <div class="input-section">
+                    <label for="about-course">About Course </label>
+                    <input type="textarea" name="about-course" id="about-course" placeholder="about-course" />
+                </div>
+                <br>
+                <h1>Course Details</h1>
                 <div class="input-section">
                     <label for="duration">Duration</label>
-                    <input type="text" name="duration" id="duration" placeholder="duration (in semester)" required />
+                    <input type="number" name="duration" id="duration" placeholder="duration (in semesters)" />
                 </div>
                 <br />
-                <div class="input-section">
-                    <label for="startdate">Start Date</label>
-                    <input type="date" name="startdate" id="startdate" required value="<?php echo date("Y-m-d") ?>" />
-                    <label for="enddate">End Date</label>
-                    <input type="date" name="enddate" id="enddate" required value="<?php echo date("Y-m-d") ?>" />
+                <div class="input-section" id="syllabus">
+                    <!-- semester selection  -->
+                    <label for="semester">Semester</label>
+                    <select name="semester" id="semester"></select>
+                    <br>
+                    <label for="no-of-subs">No of Subjects in Semester</label>
+                    <input type="number" name="no-of-subs" id="no-of-subs" />
+                    <div id="subjectInputs"></div>
+                    <!--sub input field according to no of subjects  -->
                 </div>
-                <br />
+
                 <div class="input-section">
                     <button onclick="nextStep()">
                         <span style="font-size:16px"> Next </span>
@@ -53,7 +65,7 @@ include_once("../nav/collegenav.php");
             </div>
             <div class="form-step hide" id="step2">
                 <div class="input-section">
-                    <label for="courserequirements">Course Requirements:</label>
+                    <label for="courserequirements">Entry Requirements:</label>
                 </div>
                 <br />
 
@@ -106,7 +118,7 @@ include_once("../nav/collegenav.php");
                 </div>
 
                 <br />
-
+                <!-- input field according to level selection -->
                 <div class="input-section">
                     <label for="secondary">Secondary</label>
                 </div>
@@ -156,7 +168,21 @@ include_once("../nav/collegenav.php");
                         <br />
                     </div>
                 </div>
+                <div class="input-section">
+                    <!-- there have many intakes -->
+                    <label for="no-of-intakes">No of Intakes</label>
+                    <!--input fields for intake according to no of intakes input  -->
+                    <input type="number" name="num_of_intakes" id="num_of_intakes" />
+                    <!-- make intakeid according to input intakes  -->
+                    <div id=intake_name>
 
+                    </div>
+                </div>
+                <br />
+                <div class="input-section">
+                    <label for="course-fee">Course Fee</label>
+                    <input type="number" name="coursefee" id="coursefee" placeholder="course fee(in dollars)" required />
+                </div>
                 <div class="input-section">
                     <button onclick="previousStep(2)">
                         <span style="font-size:16px"> Previous </span>
@@ -175,8 +201,87 @@ include_once("../nav/collegenav.php");
         }
     </style>
     <script>
-        let currentStep = 1;
+        function updateSemesterOptions() {
+            const duration = document.querySelector('#duration').value;
+            const semesterSelect = document.querySelector('#semester');
+            semesterSelect.innerHTML = '';
+            if (duration) {
+                for (let i = 1; i <= duration; i++) {
+                    const option = document.createElement("option");
+                    option.value = `semester${i}`;
+                    option.textContent = `Semester ${i}`;
+                    semesterSelect.appendChild(option);
+                }
+            }
+        }
+        document.querySelector('#duration').addEventListener("input", updateSemesterOptions,event);
 
+        function updateSubjectInputs() {
+            event.preventDefault();
+            const semester = document.querySelector('#semester').value;
+            const numOfSubjects = document.querySelector('#no-of-subs').value;
+            const subjectInputsDiv = document.querySelector('#subjectInputs');
+            subjectInputsDiv.innerHTML = ''; // Clear previous inputs
+            if (document.querySelector('#semester').value == null || document.querySelector('#semester').value == '') {
+                subjectInputsDiv.innerHTML = '';
+            } else {
+                for (let i = 1; i <= numOfSubjects; i++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = `semester${semester}-subject${i}`;
+                    input.placeholder = `Enter Subject ${i} name for ${semester}`;
+                    subjectInputsDiv.appendChild(input);
+                    subjectInputsDiv.appendChild(document.createElement("br"));
+
+                }
+                const button = document.createElement("button");
+                button.id = "add_sub";
+                button.textContent = "Add Subject";
+                subjectInputsDiv.appendChild(button);
+                document.querySelector('#add_sub').addEventListener('click', add_sub_var);
+
+            }
+        }
+
+        document.querySelector('#no-of-subs').addEventListener('input', updateSubjectInputs);
+
+        function add_sub_var() {
+            var sub = [];
+            const semester = document.querySelector('#semester').value;
+            console.log("Current semester:", semester);
+            const numOfSubjects = parseInt(document.querySelector('#no-of-subs').value);
+            console.log("Number of subjects:", numOfSubjects);
+            console.log("Subject value:", semester);
+            for (i = 1; i <= numOfSubjects; i++) {
+                const subjectId = `semester${semester}-subject${i}`;
+                console.log("Subject ID:", subjectId); // Debugging
+                const subjectValue = document.querySelector(`#${subjectId}`).value;
+                console.log("Subject value:", subjectValue); // Debugging
+                sub.push(subjectValue);
+                console.log(JSON.stringify(sub));
+            }
+
+            console.log(sub);
+        }
+
+        function updateintake() {
+            const intake_no = document.querySelector('#num_of_intakes').value;
+            const intakeInput = document.querySelector('#intake_name');
+            intakeInput.innerHTML = '';
+            if (intake_no) {
+                for (let i = 1; i <= intake_no; i++) {
+                    const input = document.createElement("input");
+                    input.type = 'text';
+                    input.id = `intake${i}`
+                    input.placeholder = `enter name of intake ${i}`;
+                    intakeInput.appendChild(input);
+                    intakeInput.appendChild(document.createElement("br"));
+
+                }
+            }
+        }
+        document.querySelector('#num_of_intakes').addEventListener("input", updateintake);
+        let currentStep = 1;
 
         function nextStep() {
             if (currentStep < 3) {
@@ -235,15 +340,15 @@ include_once("../nav/collegenav.php");
                 gpa: document.querySelector("#hgpa").value,
                 percentage: document.querySelector("#hpercentage").value,
             }
-            const collegeID = <?php echo ( $_SESSION['collegeID']); ?>;
-            
+            const collegeID = <?php echo ($_SESSION['collegeID']); ?>;
+
             let academic;
             if (level == "master") {
                 const bachelor = {
                     gpa: document.querySelector("#bgpa").value,
                     percentage: document.querySelector("#bpercentage").value,
                 }
-                  academic = {
+                academic = {
                     secondary: secondary,
                     higher_secondary: higher_secondary,
                     bachelor: bachelor,
@@ -259,7 +364,7 @@ include_once("../nav/collegenav.php");
                     percentage: document.querySelector("#mpercentage").value,
                 }
 
-                  academic = {
+                academic = {
                     secondary: secondary,
                     higher_secondary: higher_secondary,
                     bachelor: bachelor,
@@ -267,13 +372,13 @@ include_once("../nav/collegenav.php");
                 }
 
             } else {
-                  academic = {
+                academic = {
                     secondary: secondary,
                     higher_secondary: higher_secondary,
                 }
             }
             const data = {
-                collegeID:collegeID,
+                collegeID: collegeID,
                 level: level,
                 coursename: coursename,
                 duration: duration,

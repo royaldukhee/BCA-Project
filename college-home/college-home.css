@@ -7,9 +7,10 @@ body{
 }
 
 .content{
+    height: 30px;
     margin-top: 0px;
-    margin-left: 200px;
-    padding: 5px;
+    margin-left: 20px;
+    padding: 2px;
 }
 .content h1{
     color: #041d23;
@@ -22,18 +23,26 @@ body{
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 10px;
+    height: 200px;
 }
 .status{
+   
     background-color: #f2f2f2;
     padding: 3px;
     margin: 10px;
     border-radius: 15px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.status p{
+margin: 0px;
+padding: 0px;
+position: relative;
+align-items: center;
 }

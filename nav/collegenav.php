@@ -5,21 +5,21 @@
 
     <nav class="nav-bar">
         <ul>
-            <li><a href="../college-home/college-home.php">Home</a></li>
-            <li><a href="#">course</a>
+            <li><a href="../college-home/college-home.php">HOME</a></li>
+            <li><a href="#">COURSE</a>
                 <ul>
                     <li><a href="../add-course/add-course.php">Add Course</a></li>
-                    <li><a href="">View Courses</a></li>
+                    <li><a id="showcourse">View Courses</a></li>
                 </ul>
             </li>
-            <li><a href="#">Applications</a>
+            <li><a href="#">APPLICATION</a>
                 <ul>
                     <li><a href=" ">Pending</a></li>
                     <li><a href="">Approved</a></li>
                     <li><a href="">Rejected</a></li>
                 </ul>
             </li>
-            <li><a href="">Log-Out</a></li>
+            <li><a href="..\includes\college-logout.php">LOG-OUT</a></li>
         </ul>
     </nav>
 </body>
