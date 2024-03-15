@@ -20,6 +20,9 @@ include_once("../nav/collegenav.php");
 
             <div class="form-step" id="step1">
                 <div class="input-section">
+
+
+                    <!-- level Selection -->
                     <label for="level">Select Level</label>
                     <select name="level" id="level" onchange="showhide()">
                         <option value="">select</option>
@@ -31,6 +34,9 @@ include_once("../nav/collegenav.php");
                 </div>
                 <br />
                 <div class="input-section">
+
+
+                    <!-- course name and about Course -->
                     <label for="coursename">Course Name</label>
                     <input type="text" name="coursename" id="coursename" placeholder="coursename" />
                 </div>
@@ -40,6 +46,9 @@ include_once("../nav/collegenav.php");
                     <input type="textarea" name="about-course" id="about-course" placeholder="about-course" />
                 </div>
                 <br>
+
+
+                <!-- course detials duration, semester... -->
                 <h1>Course Details</h1>
                 <div class="input-section">
                     <label for="duration">Duration</label>
@@ -47,16 +56,16 @@ include_once("../nav/collegenav.php");
                 </div>
                 <br />
                 <div class="input-section" id="syllabus">
-                    <!-- semester selection  -->
                     <label for="semester">Semester</label>
                     <select name="semester" id="semester"></select>
                     <br>
                     <label for="no-of-subs">No of Subjects in Semester</label>
                     <input type="number" name="no-of-subs" id="no-of-subs" />
-                    <div id="subjectInputs"></div>
-                    <!--sub input field according to no of subjects  -->
-                </div>
 
+
+                    <!-- input div for sub input -->
+                    <div id="subjectInputs"></div>
+                </div>
                 <div class="input-section">
                     <button onclick="nextStep()">
                         <span style="font-size:16px"> Next </span>
@@ -64,11 +73,16 @@ include_once("../nav/collegenav.php");
                 </div>
             </div>
             <div class="form-step hide" id="step2">
+
+
+                <!-- entry requirements-->
                 <div class="input-section">
                     <label for="courserequirements">Entry Requirements:</label>
                 </div>
                 <br />
 
+
+                <!--  IELTS INPUTS -->
                 <div class="input-section">
                     <label for="ielts">IELTS</label>
                     <br />
@@ -85,7 +99,7 @@ include_once("../nav/collegenav.php");
                 </div>
 
                 <br />
-
+                <!-- PTE INPUTES -->
                 <div class="input-section">
                     <label for="pte">PTE</label>
                     <br />
@@ -169,11 +183,9 @@ include_once("../nav/collegenav.php");
                     </div>
                 </div>
                 <div class="input-section">
-                    <!-- there have many intakes -->
                     <label for="no-of-intakes">No of Intakes</label>
-                    <!--input fields for intake according to no of intakes input  -->
                     <input type="number" name="num_of_intakes" id="num_of_intakes" />
-                    <!-- make intakeid according to input intakes  -->
+                    <!--input fields for intake according to no of intakes input  -->
                     <div id=intake_name>
 
                     </div>
@@ -191,234 +203,246 @@ include_once("../nav/collegenav.php");
                         <span style="font-size: 16px">Add Course</span>
                     </button>
                 </div>
+
             </div>
         </div>
-    </div>
 
-    <style>
-        .hide {
-            display: none;
-        }
-    </style>
-    <script>
-        function updateSemesterOptions() {
-            const duration = document.querySelector('#duration').value;
-            const semesterSelect = document.querySelector('#semester');
-            semesterSelect.innerHTML = '';
-            if (duration) {
-                for (let i = 1; i <= duration; i++) {
-                    const option = document.createElement("option");
-                    option.value = `semester${i}`;
-                    option.textContent = `Semester ${i}`;
-                    semesterSelect.appendChild(option);
+        <style>
+            .hide {
+                display: none;
+            }
+        </style>
+        <script>
+            //semester select option creation 
+            function updateSemesterOptions(event) {
+                event.preventDefault();
+                const duration = document.querySelector('#duration').value;
+                const semesterSelect = document.querySelector('#semester');
+                semesterSelect.innerHTML = '';
+                if (duration) {
+                    for (let i = 1; i <= duration; i++) {
+                        const option = document.createElement("option");
+                        option.value = `${i}`;
+                        option.textContent = `${i}`;
+                        semesterSelect.appendChild(option);
+                    }
+                
                 }
+                
             }
-        }
-        document.querySelector('#duration').addEventListener("input", updateSemesterOptions,event);
+            
+            document.querySelector('#duration').addEventListener("input", updateSemesterOptions, event);
+                //function for sub inputs
+            function updateSubjectInputs(event) {
+                event.preventDefault();
+                const semester = document.querySelector('#semester').value;
+                const numOfSubjects = document.querySelector('#no-of-subs').value;
+                const subjectInputsDiv = document.querySelector('#subjectInputs');
+                subjectInputsDiv.innerHTML = ''; // Clear previous inputs
+                if (document.querySelector('#semester').value == null || document.querySelector('#semester').value == '') {
+                    subjectInputsDiv.innerHTML = '';
+                } else {
+                    for (let i = 1; i <= numOfSubjects; i++) {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.id = `semester${semester}-subject${i}`;
+                        input.placeholder = `Enter Subject ${i} name for ${semester}`;
+                        subjectInputsDiv.appendChild(input);
+                        subjectInputsDiv.appendChild(document.createElement("br"));
 
-        function updateSubjectInputs() {
-            event.preventDefault();
-            const semester = document.querySelector('#semester').value;
-            const numOfSubjects = document.querySelector('#no-of-subs').value;
-            const subjectInputsDiv = document.querySelector('#subjectInputs');
-            subjectInputsDiv.innerHTML = ''; // Clear previous inputs
-            if (document.querySelector('#semester').value == null || document.querySelector('#semester').value == '') {
-                subjectInputsDiv.innerHTML = '';
-            } else {
-                for (let i = 1; i <= numOfSubjects; i++) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.id = `semester${semester}-subject${i}`;
-                    input.placeholder = `Enter Subject ${i} name for ${semester}`;
-                    subjectInputsDiv.appendChild(input);
-                    subjectInputsDiv.appendChild(document.createElement("br"));
-
-                }
-                const button = document.createElement("button");
-                button.id = "add_sub";
-                button.textContent = "Add Subject";
-                subjectInputsDiv.appendChild(button);
-                document.querySelector('#add_sub').addEventListener('click', add_sub_var);
-
-            }
-        }
-
-        document.querySelector('#no-of-subs').addEventListener('input', updateSubjectInputs);
-
-        function add_sub_var() {
-            var sub = [];
-            const semester = document.querySelector('#semester').value;
-            console.log("Current semester:", semester);
-            const numOfSubjects = parseInt(document.querySelector('#no-of-subs').value);
-            console.log("Number of subjects:", numOfSubjects);
-            console.log("Subject value:", semester);
-            for (i = 1; i <= numOfSubjects; i++) {
-                const subjectId = `semester${semester}-subject${i}`;
-                console.log("Subject ID:", subjectId); // Debugging
-                const subjectValue = document.querySelector(`#${subjectId}`).value;
-                console.log("Subject value:", subjectValue); // Debugging
-                sub.push(subjectValue);
-                console.log(JSON.stringify(sub));
-            }
-
-            console.log(sub);
-        }
-
-        function updateintake() {
-            const intake_no = document.querySelector('#num_of_intakes').value;
-            const intakeInput = document.querySelector('#intake_name');
-            intakeInput.innerHTML = '';
-            if (intake_no) {
-                for (let i = 1; i <= intake_no; i++) {
-                    const input = document.createElement("input");
-                    input.type = 'text';
-                    input.id = `intake${i}`
-                    input.placeholder = `enter name of intake ${i}`;
-                    intakeInput.appendChild(input);
-                    intakeInput.appendChild(document.createElement("br"));
+                    }
+                    const button = document.createElement("button");
+                    button.id = "add_sub";
+                    button.textContent = "Add Subject";
+                    subjectInputsDiv.appendChild(button);
+                    document.querySelector('#add_sub').addEventListener('click', add_sub_var);
 
                 }
             }
-        }
-        document.querySelector('#num_of_intakes').addEventListener("input", updateintake);
-        let currentStep = 1;
 
-        function nextStep() {
-            if (currentStep < 3) {
+            document.querySelector('#no-of-subs').addEventListener('input', updateSubjectInputs);
+           
+           
+           
+            var semesterValue=1;
+                function add_sub_var() {
+                let semester= document.querySelector('#semester').value;
+                var sub = [];
+                console.log("Current semester:", semester);
+                var numOfSubjects = parseInt(document.querySelector('#no-of-subs').value);
+
+                console.log("Number of subjects:", numOfSubjects);
+                
+                for (i = 1; i <= numOfSubjects; i++) {
+                  
+                    let subjectValue = document.getElementById(`semester${semester}-subject${i}`).value;
+                    console.log("Subject value:", subjectValue); // Debugging
+                    sub.push(subjectValue);
+                    
+                }
+                console.log(sub);
+                semesterValue++;
+                document.querySelector('#semester').value=semester;
+                console.log(document.querySelector('#semester').value);
+                document.querySelector('#no-of-subs').value=='';
+                console.log(document.querySelector('#no-of-subs').value);
+            }
+
+            function updateintake() {
+                const intake_no = document.querySelector('#num_of_intakes').value;
+                const intakeInput = document.querySelector('#intake_name');
+                intakeInput.innerHTML = '';
+                if (intake_no) {
+                    for (let i = 1; i <= intake_no; i++) {
+                        const input = document.createElement("input");
+                        input.type = 'text';
+                        input.id = `intake${i}`
+                        input.placeholder = `enter name of intake ${i}`;
+                        intakeInput.appendChild(input);
+                        intakeInput.appendChild(document.createElement("br"));
+
+                    }
+                }
+            }
+            document.querySelector('#num_of_intakes').addEventListener("input", updateintake);
+            let currentStep = 1;
+
+            function nextStep() {
+                if (currentStep < 3) {
+                    document.getElementById(`step${currentStep}`).classList.add('hide');
+                    currentStep++;
+                    document.getElementById(`step${currentStep}`).classList.remove('hide');
+                }
+            }
+
+            function previousStep() {
                 document.getElementById(`step${currentStep}`).classList.add('hide');
-                currentStep++;
+                currentStep--;
                 document.getElementById(`step${currentStep}`).classList.remove('hide');
             }
-        }
 
-        function previousStep() {
-            document.getElementById(`step${currentStep}`).classList.add('hide');
-            currentStep--;
-            document.getElementById(`step${currentStep}`).classList.remove('hide');
-        }
-
-        function showhide() {
-            let level = document.getElementById("level").value;
-            if (level == "master") {
-                document.querySelector(".bachelor").classList.remove("hide");
-                document.querySelector(".master").classList.add("hide");
-            } else if (level == "phd") {
-                document.querySelector(".bachelor").classList.remove("hide");
-                document.querySelector(".master").classList.remove("hide");
-            } else {
-                document.querySelector(".bachelor").classList.add("hide");
-                document.querySelector(".master").classList.add("hide");
-            }
-        }
-
-        function addcourse() {
-            let level = document.getElementById("level").value;
-            const coursename = document.querySelector("#coursename").value;
-            const duration = document.querySelector("#duration").value;
-            const startdate = document.querySelector("#startdate").value;
-            const enddate = document.querySelector("#enddate").value;
-            const IELTS = {
-                listening: document.querySelector("#ilistening").value,
-                reading: document.querySelector("#ireading").value,
-                writing: document.querySelector("#iwriting").value,
-                speaking: document.querySelector("#ispeaking").value,
-                overall: document.querySelector("#overallband").value,
-            };
-
-            const PTE = {
-                listening: document.querySelector("#plistening").value,
-                reading: document.querySelector("#preading").value,
-                writing: document.querySelector("#pwriting").value,
-                speaking: document.querySelector("#pspeaking").value,
-                overall: document.querySelector("#overallscore").value,
-            }
-            const secondary = {
-                gpa: document.querySelector("#sgpa").value,
-                percentage: document.querySelector("#spercentage").value,
-            }
-            const higher_secondary = {
-                gpa: document.querySelector("#hgpa").value,
-                percentage: document.querySelector("#hpercentage").value,
-            }
-            const collegeID = <?php echo ($_SESSION['collegeID']); ?>;
-
-            let academic;
-            if (level == "master") {
-                const bachelor = {
-                    gpa: document.querySelector("#bgpa").value,
-                    percentage: document.querySelector("#bpercentage").value,
-                }
-                academic = {
-                    secondary: secondary,
-                    higher_secondary: higher_secondary,
-                    bachelor: bachelor,
-                }
-            } else if (level == "phd") {
-                const bachelor = {
-                    gpa: document.querySelector("#bgpa").value,
-                    percentage: document.querySelector("#bpercentage").value,
-                }
-                const master = {
-
-                    gpa: document.querySelector("#mgpa").value,
-                    percentage: document.querySelector("#mpercentage").value,
-                }
-
-                academic = {
-                    secondary: secondary,
-                    higher_secondary: higher_secondary,
-                    bachelor: bachelor,
-                    master: master,
-                }
-
-            } else {
-                academic = {
-                    secondary: secondary,
-                    higher_secondary: higher_secondary,
+            function showhide() {
+                let level = document.getElementById("level").value;
+                if (level == "master") {
+                    document.querySelector(".bachelor").classList.remove("hide");
+                    document.querySelector(".master").classList.add("hide");
+                } else if (level == "phd") {
+                    document.querySelector(".bachelor").classList.remove("hide");
+                    document.querySelector(".master").classList.remove("hide");
+                } else {
+                    document.querySelector(".bachelor").classList.add("hide");
+                    document.querySelector(".master").classList.add("hide");
                 }
             }
-            const data = {
-                collegeID: collegeID,
-                level: level,
-                coursename: coursename,
-                duration: duration,
-                startdate: startdate,
-                enddate: enddate,
-                IELTS: IELTS,
-                PTE: PTE,
-                academic: academic,
-            }
 
-            if (confirm("Do You Want to really add") == true) {
-                try {
-                    const response = fetch("../includes/add-course.inc.php/", {
-                        method: "post",
-                        body: JSON.stringify(data),
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                    });
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
+            function addcourse() {
+                let level = document.getElementById("level").value;
+                const coursename = document.querySelector("#coursename").value;
+                const duration = document.querySelector("#duration").value;
+                const startdate = document.querySelector("#startdate").value;
+                const enddate = document.querySelector("#enddate").value;
+                const IELTS = {
+                    listening: document.querySelector("#ilistening").value,
+                    reading: document.querySelector("#ireading").value,
+                    writing: document.querySelector("#iwriting").value,
+                    speaking: document.querySelector("#ispeaking").value,
+                    overall: document.querySelector("#overallband").value,
+                };
+
+                const PTE = {
+                    listening: document.querySelector("#plistening").value,
+                    reading: document.querySelector("#preading").value,
+                    writing: document.querySelector("#pwriting").value,
+                    speaking: document.querySelector("#pspeaking").value,
+                    overall: document.querySelector("#overallscore").value,
+                }
+                const secondary = {
+                    gpa: document.querySelector("#sgpa").value,
+                    percentage: document.querySelector("#spercentage").value,
+                }
+                const higher_secondary = {
+                    gpa: document.querySelector("#hgpa").value,
+                    percentage: document.querySelector("#hpercentage").value,
+                }
+                const collegeID = <?php echo ($_SESSION['collegeID']); ?>;
+
+                let academic;
+                if (level == "master") {
+                    const bachelor = {
+                        gpa: document.querySelector("#bgpa").value,
+                        percentage: document.querySelector("#bpercentage").value,
                     }
-                    const result = response.text();
-                    console.log(result);
-                    if (result == "success") {
-                        alert("Course Added Successfully");
-                    } else {
-                        alert("There has been a problem with your fetch operation");
+                    academic = {
+                        secondary: secondary,
+                        higher_secondary: higher_secondary,
+                        bachelor: bachelor,
                     }
-                } catch (error) {
-                    console.error(
-                        "There has been a problem with your fetch operation:",
-                        error
-                    );
+                } else if (level == "phd") {
+                    const bachelor = {
+                        gpa: document.querySelector("#bgpa").value,
+                        percentage: document.querySelector("#bpercentage").value,
+                    }
+                    const master = {
+
+                        gpa: document.querySelector("#mgpa").value,
+                        percentage: document.querySelector("#mpercentage").value,
+                    }
+
+                    academic = {
+                        secondary: secondary,
+                        higher_secondary: higher_secondary,
+                        bachelor: bachelor,
+                        master: master,
+                    }
+
+                } else {
+                    academic = {
+                        secondary: secondary,
+                        higher_secondary: higher_secondary,
+                    }
                 }
-            } else {
-                alert("Declined");
+                const data = {
+                    collegeID: collegeID,
+                    level: level,
+                    coursename: coursename,
+                    duration: duration,
+                    startdate: startdate,
+                    enddate: enddate,
+                    IELTS: IELTS,
+                    PTE: PTE,
+                    academic: academic,
+                }
+
+                if (confirm("Do You Want to really add") == true) {
+                    try {
+                        const response = fetch("../includes/add-course.inc.php/", {
+                            method: "post",
+                            body: JSON.stringify(data),
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                        });
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        const result = response.text();
+                        console.log(result);
+                        if (result == "success") {
+                            alert("Course Added Successfully");
+                        } else {
+                            alert("There has been a problem with your fetch operation");
+                        }
+                    } catch (error) {
+                        console.error(
+                            "There has been a problem with your fetch operation:",
+                            error
+                        );
+                    }
+                } else {
+                    alert("Declined");
+                }
             }
-        }
-    </script>
+        </script>
 </body>
 
 </html>
