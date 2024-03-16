@@ -60,7 +60,7 @@ include_once("../nav/collegenav.php");
                     <select name="semester" id="semester"></select>
                     <br>
                     <label for="no-of-subs">No of Subjects in Semester</label>
-                    <input type="number" name="no-of-subs" id="no-of-subs" />
+                    <input type="number" name="no-of-subs" id="no-of-subs" value="0"/>
 
 
                     <!-- input div for sub input -->
@@ -241,7 +241,8 @@ include_once("../nav/collegenav.php");
                 subjectInputsDiv.innerHTML = ''; // Clear previous inputs
                 if (document.querySelector('#semester').value == null || document.querySelector('#semester').value == '') {
                     subjectInputsDiv.innerHTML = '';
-                } else {
+                }
+                 else {
                     for (let i = 1; i <= numOfSubjects; i++) {
                         const input = document.createElement('input');
                         input.type = 'text';
@@ -264,30 +265,30 @@ include_once("../nav/collegenav.php");
            
            
            
-            var semesterValue=1;
-                function add_sub_var() {
+            
+                function  add_sub_var(sub) {
                 let semester= document.querySelector('#semester').value;
                 var sub = [];
                 console.log("Current semester:", semester);
                 var numOfSubjects = parseInt(document.querySelector('#no-of-subs').value);
 
                 console.log("Number of subjects:", numOfSubjects);
-                
+                // for( j=1;j<=semester;j++){
                 for (i = 1; i <= numOfSubjects; i++) {
                   
                     let subjectValue = document.getElementById(`semester${semester}-subject${i}`).value;
-                    console.log("Subject value:", subjectValue); // Debugging
-                    sub.push(subjectValue);
-                    
+                    if(subjectValue){sub.push(subjectValue);
+                    }
                 }
+            // }
                 console.log(sub);
-                semesterValue++;
+                semester++;
                 document.querySelector('#semester').value=semester;
                 console.log(document.querySelector('#semester').value);
-                document.querySelector('#no-of-subs').value=='';
+                document.querySelector('#no-of-subs').value=0;
+                document.querySelector('#subjectInputs').innerHTML="";
                 console.log(document.querySelector('#no-of-subs').value);
             }
-
             function updateintake() {
                 const intake_no = document.querySelector('#num_of_intakes').value;
                 const intakeInput = document.querySelector('#intake_name');
