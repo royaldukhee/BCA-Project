@@ -22,7 +22,7 @@ file_get_contents("php://input");
     } else {
         $passhash = password_hash($password, PASSWORD_DEFAULT);
         $insstmt =$conn->prepare("INSERT INTO colleges (collegename, email, password, country,state,city) VALUES (?,?, ?, ?,?,?)");
-        $insstmt->bind_param("ssssss",$country, $email, $passhash, $country,$state,$city);
+        $insstmt->bind_param("ssssss",$collegename, $email, $passhash, $country,$state,$city);
         $insstmt->execute();
         if ($insstmt->affected_rows > 0) {
             echo "success";
