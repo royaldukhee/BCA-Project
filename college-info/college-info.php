@@ -9,7 +9,7 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
 if (isset($_GET['country'])) {
     $country = $_GET['country'];
 } else {
-    $country = null;
+    $country = '';
 }
 echo 'country:' . $country;
 ?>
@@ -52,6 +52,7 @@ echo 'country:' . $country;
                         echo `
                     <th>Country</th>`;
                     }
+                    echo 'result:'. empty($country);
                     ?>
                     <th>College Name</th>
                     <th>State</th>
