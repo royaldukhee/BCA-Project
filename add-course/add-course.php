@@ -1,6 +1,11 @@
 <?php
-require_once("../includes/session.inc.php");
-include_once("../nav/collegenav.php");
+require_once('../includes/session.inc.php');
+include_once('../nav/collegenav.php');
+// echo'Session'.$_SESSION['collegeID'];
+if (!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID'])) {
+    header('location:/index.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,13 +64,19 @@ include_once("../nav/collegenav.php");
                     <label for="semester">Semester</label>
                     <select name="semester" id="semester"></select>
                     <br>
-                    <label for="no-of-subs">No of Subjects in Semester</label>
-                    <input type="number" name="no-of-subs" id="no-of-subs" value="0" />
-
+                    <div class="num-of-subs">
+                        <label for="no-of-subs">No of Subjects in Semester</label>
+                        <input type="number" name="no-of-subs" id="no-of-subs" value="" />
+                    </div>
 
                     <!-- input div for sub input -->
-                    <div id="subjectInputs"></div>
                 </div>
+                <div class="input-section" id="input-section-sub">
+                    <div id="subjectInputs"></div>
+                    <div class="subjectInputsError"></div>
+
+                </div>
+
                 <div class="input-section">
                     <button onclick="nextStep()">
                         <span style="font-size:16px"> Next </span>
@@ -114,6 +125,8 @@ include_once("../nav/collegenav.php");
                     <label for="overall-score">Overall Score </label>
                     <input type="number" name="overallscore" id="overallscore" placeholder="Overall Score" required />
                 </div>
+
+
                 <div class="input-section">
 
                     <button onclick="previousStep(1)">
@@ -195,6 +208,8 @@ include_once("../nav/collegenav.php");
                     <label for="course-fee">Course Fee</label>
                     <input type="number" name="coursefee" id="coursefee" placeholder="course fee(in dollars)" required />
                 </div>
+
+
                 <div class="input-section">
                     <button onclick="previousStep(2)">
                         <span style="font-size:16px"> Previous </span>
@@ -204,6 +219,11 @@ include_once("../nav/collegenav.php");
                     </button>
                 </div>
 
+            </div>
+            <div class="input-section">
+                <div class="error">
+
+                </div>
             </div>
         </div>
 
@@ -241,14 +261,29 @@ include_once("../nav/collegenav.php");
                 subjectInputsDiv.innerHTML = ''; // Clear previous inputs
                 if (document.querySelector('#semester').value == null || document.querySelector('#semester').value == '') {
                     subjectInputsDiv.innerHTML = '';
-                } else {
+                } else if (numOfSubjects == null || numOfSubjects === ''|| numOfSubjects==0) {
+                    document.querySelector('.subjectInputsError').innerHTML = "<span style='color:red'> Please fill in all no of subjects before proceeding.</span>";
+
+                } 
+                else if ( numOfSubjects==0) {
+                    document.querySelector('.subjectInputsError').innerHTML = "<span style='color:red'> Please fill valid Number.</span>";
+
+                }
+                else {
+
+
+
                     for (let i = 1; i <= numOfSubjects; i++) {
+                        const label = document.createElement('label')
+                        label.textContent = `Subject ${i} name`;
+                        subjectInputsDiv.appendChild(label);
                         const input = document.createElement('input');
                         input.type = 'text';
                         input.id = `semester${semester}-subject${i}`;
-                        input.placeholder = `Enter Subject ${i} name for ${semester}`;
+                        input.placeholder = `Enter Subject ${i} name for ${semester} semester`;
                         subjectInputsDiv.appendChild(input);
                         subjectInputsDiv.appendChild(document.createElement("br"));
+
 
                     }
                     const button = document.createElement("button");
@@ -258,39 +293,49 @@ include_once("../nav/collegenav.php");
                     document.querySelector('#add_sub').addEventListener('click', add_sub_var);
 
                 }
+
             }
 
             document.querySelector('#no-of-subs').addEventListener('input', updateSubjectInputs);
 
 
             var allSemesterSubjects = [];
-          
-         async   function add_sub_var() {
-                for (i = 1; i <= document.querySelector("#duration").value; i++) {
-                    var semester = document.querySelector('#semester').value;
-                    var sub = [];
-                    console.log("Current semester:", semester);
-                    var numOfSubjects = parseInt(document.querySelector('#no-of-subs').value);
 
-                    console.log("Number of subjects:", numOfSubjects);
-                    for (i = 1; i <= numOfSubjects; i++) {
+            function add_sub_var() {
+                if (document.querySelector("#duration").value) {
+                    for (i = 1; i <= document.querySelector("#duration").value; i++) {
+                        var semester = document.querySelector('#semester').value;
+                        var sub = [];
+                        console.log("Current semester:", semester);
+                        var numOfSubjects = parseInt(document.querySelector('#no-of-subs').value);
 
-                        let subjectValue = document.getElementById(`semester${semester}-subject${i}`).value;
-                        if (subjectValue) {
-                            sub.push(subjectValue);
+                        console.log("Number of subjects:", numOfSubjects);
+                        if (numOfSubjects == null || numOfSubjects === '') {
+                            document.querySelector('.error').innerHTML = "<span style='color:red'> Please fill in all required fields before proceeding.</span>";
+                        } else {
+                            for (i = 1; i <= numOfSubjects; i++) {
+
+                                let subjectValue = document.getElementById(`semester${semester}-subject${i}`).value;
+                                if (subjectValue == null || subjectValue === '') {
+                                    document.querySelector('.subjectInputsError').innerHTML = "<span style='color:red'> Please fill in all subjects fields before proceeding.</span>";
+                                    return;
+                                } else {
+                                    sub.push(subjectValue);
+                                }
+                            }
+                            allSemesterSubjects[semester] = sub;
+                            semester++;
+                            document.querySelector('#semester').value = semester;
+                            console.log(document.querySelector('#semester').value);
+                            document.querySelector('#no-of-subs').value = 0;
+                            document.querySelector('#subjectInputs').innerHTML = "";
+                            console.log(allSemesterSubjects);
                         }
                     }
-                    allSemesterSubjects[semester]=sub;
-                    semester++;
-                    document.querySelector('#semester').value = semester;
-                    console.log(document.querySelector('#semester').value);
-                    document.querySelector('#no-of-subs').value = 0;
-                    document.querySelector('#subjectInputs').innerHTML = "";
-                    console.log(allSemesterSubjects);
-                    }
                 }
+            }
 
-          async  function updateintake() {
+            function updateintake() {
                 const intake_no = document.querySelector('#num_of_intakes').value;
                 const intakeInput = document.querySelector('#intake_name');
                 intakeInput.innerHTML = '';
@@ -309,11 +354,56 @@ include_once("../nav/collegenav.php");
             document.querySelector('#num_of_intakes').addEventListener("input", updateintake);
 
             // getting intakes name
-        
-      
+
+
             let currentStep = 1;
 
-          async  function nextStep() {
+            function nextStep() {
+
+                if (currentStep === 1) {
+                    const level = document.getElementById("level").value;
+                    const coursename = document.querySelector("#coursename").value;
+                    const about_course = document.querySelector("#about-course").value;
+                    const duration = document.querySelector("#duration").value;
+
+                    if (!level || !coursename || !about_course || !duration) {
+                        document.querySelector('.error').innerHTML = "<span style='color:red'> Please fill in all required fields before proceeding.</span>";
+
+                        return;
+                    }
+                } else if (currentStep === 2) {
+                    // Validation for step 2 fields
+                    const ilistening = document.querySelector("#ilistening").value;
+                    const ireading = document.querySelector("#ireading").value;
+                    const iwriting = document.querySelector("#iwriting").value;
+                    const ispeaking = document.querySelector("#ispeaking").value;
+                    const overallband = document.querySelector("#overallband").value;
+
+                    const plistening = document.querySelector("#plistening").value;
+                    const preading = document.querySelector("#preading").value;
+                    const pwriting = document.querySelector("#pwriting").value;
+                    const pspeaking = document.querySelector("#pspeaking").value;
+                    const overallscore = document.querySelector("#overallscore").value;
+
+                    if (!ilistening || !ireading || !iwriting || !ispeaking || !overallband ||
+                        !plistening || !preading || !pwriting || !pspeaking || !overallscore) {
+
+                        document.querySelector('.error').innerHTML = "<span style='color:red'> Please fill in all required fields before proceeding.</span>";
+                        return;
+                    }
+                } else if (currentStep === 3) {
+                    // Validation for step 3 fields
+                    const sgpa = document.querySelector("#sgpa").value;
+                    const spercentage = document.querySelector("#spercentage").value;
+                    const hgpa = document.querySelector("#hgpa").value;
+                    const hpercentage = document.querySelector("#hpercentage").value;
+
+                    if (!sgpa || !spercentage || !hgpa || !hpercentage) {
+                        document.querySelector('.error').innerHTML = "<span style='color:red'> Please fill in all required fields before proceeding.</span>";
+                        return;
+                    }
+                }
+
                 if (currentStep < 3) {
                     document.getElementById(`step${currentStep}`).classList.add('hide');
                     currentStep++;
@@ -321,7 +411,7 @@ include_once("../nav/collegenav.php");
                 }
             }
 
-           async function previousStep() {
+            function previousStep() {
                 document.getElementById(`step${currentStep}`).classList.add('hide');
                 currentStep--;
                 document.getElementById(`step${currentStep}`).classList.remove('hide');
@@ -340,20 +430,51 @@ include_once("../nav/collegenav.php");
                     document.querySelector(".master").classList.add("hide");
                 }
             }
-           
-//backend function 
+            const inputElements = document.querySelectorAll('input');
+            inputElements.forEach(input => {
+                input.addEventListener('input', errorRemove);
+            });
 
-         async   function addcourse() {
-            intakesName=[];
-            let number=   document.querySelector("#num_of_intakes").value;
-            for(i=1;i<=number;i++){
-                let intake= document.querySelector(`#intake${i}`).value;
-                if(intake){
-                    intakesName.push(intake);
-                }
+
+            const selectElements = document.querySelectorAll('select');
+            selectElements.forEach(input => {
+                input.addEventListener('input', errorRemove);
+            });
+            document.addEventListener('DOMContentLoaded',function(){
+            const subjectInputElements = document.querySelectorAll('#subjectInputs input');
+            subjectInputElements.forEach(input=>{
+                input.addEventListener('input',errorRemove);
+
+            });
+        });
+
+
+            function errorRemove() {
+                document.querySelector('.error').innerHTML = " ";
+                document.querySelector('.subjectInputsError').innerHTML = " ";
+
             }
-        
-        // console.log("intakes",intakesName);
+
+
+            //backend fetch function 
+
+            async function addcourse() {
+
+
+
+                intakesName = [];
+                let number = document.querySelector("#num_of_intakes").value;
+                for (i = 1; i <= number; i++) {
+                    let intake = document.querySelector(`#intake${i}`).value;
+                    if (intake == null || intake === '') {
+                        document.querySelector('.error').innerHTML = "<span style='color:red'> Please fill in all required fields before proceeding.</span>";
+                    } else {
+                        intakesName.push(intake);
+                    }
+                }
+
+
+                // console.log("intakes",intakesName);
 
 
 
@@ -362,9 +483,9 @@ include_once("../nav/collegenav.php");
                 const about_course = document.querySelector("#about-course").value;
                 const duration = document.querySelector("#duration").value;
                 const semesterDetails = allSemesterSubjects;
-                const courseFee =document.querySelector('#coursefee').value;
-                const collegeID =<?php echo $_SESSION['collegeID'];
-                
+                const courseFee = document.querySelector('#coursefee').value;
+                const collegeID = <?php echo $_SESSION['collegeID'];
+
                                     ?>;
                 const IELTS = {
                     listening: document.querySelector("#ilistening").value,
@@ -389,7 +510,7 @@ include_once("../nav/collegenav.php");
                     gpa: document.querySelector("#hgpa").value,
                     percentage: document.querySelector("#hpercentage").value,
                 }
-              
+
                 let academic;
                 if (level == "master") {
                     const bachelor = {
@@ -429,14 +550,14 @@ include_once("../nav/collegenav.php");
                     collegeID: collegeID,
                     level: level,
                     coursename: coursename,
-                    about_course:about_course,
+                    about_course: about_course,
                     duration: duration,
                     semesterDetails: allSemesterSubjects,
                     courseFee: courseFee,
                     IELTS: IELTS,
                     PTE: PTE,
                     academic: academic,
-                    intakes:intakesName,
+                    intakes: intakesName,
                 }
 
                 if (confirm("Do You Want to really add") == true) {
@@ -450,17 +571,16 @@ include_once("../nav/collegenav.php");
                         });
                         if (!response.ok) {
                             throw new Error("Network Error");
-                        }
-                        else{
-                        const result = await response.text();
-                        if (result === "success") {
-                            alert("Course Added Successfully");
-                            window.location.href="../college-home/college-home.php";
                         } else {
-                            console.log(result);
-                            alert("problem with your fetch operation");
+                            const result = await response.text();
+                            if (result === "success") {
+                                alert("Course Added Successfully");
+                                window.location.href = "../college-home/college-home.php";
+                            } else {
+                                console.log(result);
+                                alert("problem with your fetch operation");
+                            }
                         }
-                    }
                     } catch (error) {
                         console.error(
                             "There has been a problem with your fetch operation:",

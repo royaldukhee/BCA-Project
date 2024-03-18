@@ -1,5 +1,8 @@
 <?php
 $key = $_GET['key'];
+if(empty($key)){
+    header('location:/index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +54,15 @@ $key = $_GET['key'];
 
 </body>
 <script>
+    const inputElements = document.querySelectorAll('.form-control');
+    inputElements.forEach(input => {
+        input.addEventListener('input', errorRemove);
+    });
+
+    function errorRemove(){
+        document.querySelector('.error').innerHTML=" ";
+    }    
+   
     function login(event) {
         event.preventDefault();
         const username = document.querySelector('#username').value;

@@ -19,7 +19,7 @@
                     <li><a href="">Rejected</a></li>
                 </ul>
             </li> -->
-            <li><a href="..\">LOG-OUT</a></li>
+            <li><a href="..\includes\logout.php">LOG-OUT</a></li>
         </ul>
     </nav>
 </body>

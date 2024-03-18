@@ -1,7 +1,11 @@
 <?php
-include_once('../nav/collegenav.php')
-
-
+require_once ('../includes/session.inc.php');
+include_once('../nav/collegenav.php');
+// echo'Session'.$_SESSION['collegeID'];
+if(!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID']) ){
+    header('location:/index.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

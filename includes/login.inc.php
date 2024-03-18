@@ -19,6 +19,7 @@ if($key=='1'){
         echo "user not found";
         exit();
     } elseif (password_verify($password, $resultdata['password']) == true) {
+        $_SESSION['ID']=session_id();
         $_SESSION['studentID']=$resultdata['studentID'];
         echo "success";
         exit();
@@ -37,7 +38,8 @@ elseif($key=='2'){
         echo "user not found";
         exit();
     } elseif (password_verify($password, $resultdata['password']) == true) {
-        $_SESSION['collegeID']=$resultdata['collegeID'];        
+        $_SESSION['ID']=session_id();
+               $_SESSION['collegeID']=$resultdata['collegeID'];        
         echo "success";
         exit();
     } else {

@@ -55,7 +55,7 @@
                 <div class="group">
 
                     <input type="password" class="form-control" id="re-password" placeholder="re-password"  >
-                    <div id="error"></div>
+                    <div class="error"></div>
                 </div>
             </div>
 
@@ -65,6 +65,14 @@
         <p class="register-p">Already a member? <a href="../login/login.php?key=2"> Login</a></p>
     </div>
     <script>
+        const inputElements = document.querySelectorAll('.form-control');
+    inputElements.forEach(input => {
+        input.addEventListener('input', errorRemove);
+    });
+
+    function errorRemove(){
+        document.querySelector('.error').innerHTML=" ";
+    }  
         async function signup(event) {
             event.preventDefault();
 
@@ -76,12 +84,12 @@
             const password = document.querySelector('#password').value;
             const repass = document.querySelector('#re-password').value;
             
-            document.querySelector('#error').innerHTML = '';
+            document.querySelector('.error').innerHTML = '';
             if (collegename == null || collegename =='' || email == null ||email == '' || password == null || password =='' || repass == null || repass == '' || country == null || country == '' || state == null || state == ''||city==null||city=='') {
-                document.querySelector('#error').innerHTML = `<p style="color: red;">Please Fill Out All Fields</p>`;
+                document.querySelector('.error').innerHTML = `<p style="color: red;">Please Fill Out All Fields</p>`;
             } else {
                 if (password !== repass) {
-                    document.querySelector('#error').innerHTML = `<p style="color: red;">Password doesn't Match</p>`;
+                    document.querySelector('.error').innerHTML = `<p style="color: red;">Password doesn't Match</p>`;
                 } else {
                     const data = new FormData();
                     data.append('collegename', collegename);
@@ -112,7 +120,7 @@
                             document.querySelector('#error').innerHTML += result;
                         }
                     } catch (error) {
-                        console.error('There was a problem with the fetch operation:', error);
+                        document.querySelector('#error').innerHTML+='There was a problem with the fetch operation:'+ error;
                     }
                 }
             }
