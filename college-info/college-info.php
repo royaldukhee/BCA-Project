@@ -6,13 +6,10 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
     header('location:/index.php');
     exit();
 }
-if (isset($_GET['country'])) {
-    $country = $_GET['country'];
-} else {
-    $country = '';
-}
-echo 'country:' . $country;
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,15 +22,10 @@ echo 'country:' . $country;
 
 <body>
     <h1>Choose Your Interest</h1>
-    <?php
-    if (!empty($country)) {
-        echo `
-    <label for="country">Country</label>
-    <input type="search" id=search placeholder="search country">
-    `;
-    }
-    ?>
-
+    <div class="filter">
+        <label for="country">Country</label>
+        <input type="search" id="search" placeholder="search country">
+    </div>
     <label for="state">Filter By State</label>
     <select name="state" id="state">
         <option value="">Select</option>
@@ -47,13 +39,9 @@ echo 'country:' . $country;
         <table class="tableClass">
             <thead>
                 <tr>
-                    <?php
-                    if (empty($country)) {
-                        echo `
-                    <th>Country</th>`;
-                    }
-                    echo 'result:'. empty($country);
-                    ?>
+
+                    <th id=countryColumn>Country</th>
+
                     <th>College Name</th>
                     <th>State</th>
                     <th>City</th>
@@ -64,71 +52,115 @@ echo 'country:' . $country;
                     <th>View Requirements</th>
                 </tr>
             </thead>
-            <tbody id="table-body">
-                <!-- <tr>
-                    <td>loregdjkj</td>
-                    <td>hxkjlf</td>
-                    <td>lfffnvcvnn</td>
-                    <td>fcvb,mckm</td>
-                    <td>xfhkmbkk</td>
-                    <td>gjrjgjbjvod</td>
-                    <td>xbmkjbdljkckc</td>
-                    <td>fgkjijfgigxj</td>
-                    <td>fkgkhgjhfbb</td>
-                    <td><button id="view">view</button></td>
-                </tr> -->
+            <tbody id="tableBody">
+
             </tbody>
 
         </table>
 
     </div>
     <script>
-        window.onload = async function initialFetch() {
-            const country = "<?php echo $country; ?>";
-            console.log('country: ', country)
+        const url = '../includes/college-info.inc.php';
+
+        const fetchData = async (country, state, course) => {
+            if(country!=='others'){
+                document.querySelector('#countryColumn').style.display = 'none';
+
+            }
             try {
-                const response = await fetch('../includes/college-info.inc.php', {
+                const response = await fetch(url, {
                     method: "POST",
-                    body: '',
+                    body: JSON.stringify({
+                        country,
+                        state,
+                        course
+                    }),
                     headers: {
                         "Content-Type": "application/JSON"
                     },
                 });
                 if (!response.ok) {
                     throw new Error("Response Error");
+                }
+                const result = await response.json();
+                console.log(result);
+                const tableBody = document.querySelector('#tableBody');
+                tableBody.innerHTML = '';
+                if (Array.isArray(result)) {
+                    result.forEach(data => {
+                const tr = document.createElement('tr');
+                tr.setAttribute('id', data.courseID);
+                        if(country==='others'){
+                                                tr.innerHTML = `<td>${data.country}</td>`;
+                        };
+                        tr.innerHTML+=`
+                    <td id=${data.CollegeID}>${data.collegename}</td>
+                    <td>${data.state}</td>
+                    <td>${data.city}</td>
+                    <td>${data.coursename}</td>
+                    <td>${data.level}</td>
+                    <td>${data.duration} Semester</td>
+                    <td>${data.course_fee}</td>
+                    <td><button id=${data.courseID}>View</button></td>`;
+                        tableBody.appendChild(tr);
+                    });
                 } else {
-                    let result = await response.json();
-                    console.log(result);
-                    const tableBody = document.querySelector('#table-body');
-
-                    if (Array.isArray(result)) { // Check if result is an array
-                        result.forEach(data => {
-                            const tr = document.createElement('tr');
-                            tr.setAttribute('id', data.courseID);
-
-                            if (country == null) {
-                                tr.innerHTML = `<td>${data.country}</td>`
-                            };
-                            tr.innerHTML += `
-                            <td>${data.collegename}</td>
-                            <td>${data.state}</td>
-                            <td>${data.city}</td>
-                            <td id=${data.courseID}>${data.coursename}</td>
-                            <td>${data.level}</td>
-                            <td>${data.duration} Semester</td>
-                            <td>${data.course_fee}</td>
-                            <td><button id =${data.courseID}> view </button> </td>`;
-
-                            tableBody.appendChild(tr);
-                        });
-                    } else {
-                        console.log("Invalid response format: expected an array");
-                    }
+                    console.log("Invalid response format: expected an array");
                 }
             } catch (error) {
                 console.log("Error Occurred", error);
             }
+        };
+
+        const countryInput = document.getElementById('search');
+        countryInput.addEventListener('change', async () => {
+            const country = countryInput.value;
+            await fetchData(country);
+
+        });
+
+         
+        const urlParams = new URLSearchParams(window.location.search);
+        const countryParam = urlParams.get('country');
+        console.log(countryParam);
+        window.onload = async () => {
+            await fetchData(countryParam);
+        };
+        const searchInput = document.getElementById('search');
+        const stateSelect = document.getElementById('state');
+        const programSelect = document.getElementById('program');
+
+       
+        async function updateStates(country) {
+           stateSelect.innerHTML = '<option value="">Select</option>';
+            const response = await fetch(`${url}?country=${country}`);
+            const data = await response.json();
+
+            data.states.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state;
+                option.textContent = state;
+                stateSelect.appendChild(option);
+            });
         }
+
+        
+        async function updateCourses(country) {
+           
+            programSelect.innerHTML = '<option value="">Select</option>';
+
+          
+            const response = await fetch(`${url}?country=${country}`);
+            const data = await response.json();
+
+            data.courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course;
+                option.textContent = course;
+                programSelect.appendChild(option);
+            });
+        }
+
     </script>
 
 </body>

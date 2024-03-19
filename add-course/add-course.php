@@ -261,15 +261,13 @@ if (!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID'])) {
                 subjectInputsDiv.innerHTML = ''; // Clear previous inputs
                 if (document.querySelector('#semester').value == null || document.querySelector('#semester').value == '') {
                     subjectInputsDiv.innerHTML = '';
-                } else if (numOfSubjects == null || numOfSubjects === ''|| numOfSubjects==0) {
+                } else if (numOfSubjects == null || numOfSubjects === '' || numOfSubjects == 0) {
                     document.querySelector('.subjectInputsError').innerHTML = "<span style='color:red'> Please fill in all no of subjects before proceeding.</span>";
 
-                } 
-                else if ( numOfSubjects==0) {
+                } else if (numOfSubjects == 0) {
                     document.querySelector('.subjectInputsError').innerHTML = "<span style='color:red'> Please fill valid Number.</span>";
 
-                }
-                else {
+                } else {
 
 
 
@@ -440,13 +438,13 @@ if (!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID'])) {
             selectElements.forEach(input => {
                 input.addEventListener('input', errorRemove);
             });
-            document.addEventListener('DOMContentLoaded',function(){
-            const subjectInputElements = document.querySelectorAll('#subjectInputs input');
-            subjectInputElements.forEach(input=>{
-                input.addEventListener('input',errorRemove);
+            document.addEventListener('DOMContentLoaded', function() {
+                const subjectInputElements = document.querySelectorAll('#subjectInputs input');
+                subjectInputElements.forEach(input => {
+                    input.addEventListener('input', errorRemove);
 
+                });
             });
-        });
 
 
             function errorRemove() {

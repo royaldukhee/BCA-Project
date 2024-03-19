@@ -49,7 +49,7 @@ if(!isset($_SESSION['studentID']) || empty($_SESSION['studentID']) ){
             <div class="destination-country">
                 <img src="./country-img/USA.png" alt="">
                 <h4>Study in USA</h4>
-                <a href="../college-info/college-info.php?country='usa'">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                <a href="../college-info/college-info.php?country=usa">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
                         <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
                     </svg>
                 </a>
@@ -58,7 +58,7 @@ if(!isset($_SESSION['studentID']) || empty($_SESSION['studentID']) ){
             <div class="destination-country">
                 <img src="./country-img/CANADA.png" alt="">
                 <h4>Study in CANADA</h4>
-                <a href="../college-info/college-info.php?country='usa'">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                <a href="../college-info/college-info.php?country=canada">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
                         <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
                     </svg>
                 </a>
@@ -76,7 +76,7 @@ if(!isset($_SESSION['studentID']) || empty($_SESSION['studentID']) ){
             <div class="destination-country">
                 <img src="./country-img/UK.png" alt="">
                 <h4>Study in UK</h4>
-                <a href="../college-info/college-info.php?country='uk'">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                <a href="../college-info/college-info.php?country=uk">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
                         <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
                     </svg>
                 </a>
@@ -84,7 +84,7 @@ if(!isset($_SESSION['studentID']) || empty($_SESSION['studentID']) ){
             <div class="destination-country">
                 <img src="./country-img/OTHERCOUNTRY.png" alt="">
                 <h4>Study in Other Countries</h4>
-                <a href="../college-info/college-info.php" target="_self">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                <a href="../college-info/college-info.php?country=others" target="_self">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
                         <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
                     </svg>
                 </a>
