@@ -22,7 +22,7 @@ h1, h2 {
 
 .information {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-around;
     margin-top: 20px;
 }

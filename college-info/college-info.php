@@ -22,10 +22,10 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
 
 <body>
     <h1>Choose Your Interest</h1>
-    <div class="filter">
+    <!-- <div class="filter">
         <label for="country">Country</label>
         <input type="search" id="search" placeholder="search country">
-    </div>
+    </div> -->
     <label for="state">Filter By State</label>
     <select name="state" id="state">
         <option value="">Select</option>
@@ -35,35 +35,53 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
         <option value="">Select</option>
     </select>
     <h2>Popular Universities and Colleges</h2>
-    <div class="collegeInfo-table">
-        <table class="tableClass">
-            <thead>
-                <tr>
+    <div class="university-container">
+        <div class="university-details">
+            <h4>Study BBA in university</h4>
+            <div class=course-Detials>
+                <h3>Minimun Requirements</h3>
+                <p>55% or 2.56 GPA in Higher Secondary</P>
+                <p>IELTS overall 6 not less than 5.5 in each band </p>
+                <p>PTE overall 61 not less than 55 in each score </p>
+                <h3>
+                    About Course
+                </h3>
+                <p>BBA TU</p>
+            </div>
 
-                    <th id=countryColumn>Country</th>
 
-                    <th>College Name</th>
-                    <th>State</th>
-                    <th>City</th>
-                    <th>Course Name</th>
-                    <th>Level</th>
-                    <th>Duration</th>
-                    <th>Course Fee</th>
-                    <th>View Requirements</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
+            <a href="../college-course-explore/college-course-explore.php?collegeID=1">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
+                </svg>
+            </a>
+        </div>
+        <div class="university-details">
+            <h4>Study BBA in university</h4>
+            <div class=course-Detials>
+                <h3>Minimun Requirements</h3>
+                <p>55% or 2.56 GPA in Higher Secondary</P>
+                <p>IELTS overall 6 not less than 5.5 in each band </p>
+                <p>PTE overall 61 not less than 55 in each score </p>
+                <h3>
+                    About Course
+                </h3>
+                <p>BBA TU</p>
+            </div>
 
-            </tbody>
 
-        </table>
+            <a href="../college-course-explore/college-course-explore.php?collegeID=1">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
 
     </div>
     <script>
         const url = '../includes/college-info.inc.php';
 
-        const fetchData = async (country, state, course) => {
-            if(country!=='others'){
+        const fetchData = async (country) => {
+            if (country !== 'others') {
                 document.querySelector('#countryColumn').style.display = 'none';
 
             }
@@ -72,8 +90,6 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
                     method: "POST",
                     body: JSON.stringify({
                         country,
-                        state,
-                        course
                     }),
                     headers: {
                         "Content-Type": "application/JSON"
@@ -88,12 +104,12 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
                 tableBody.innerHTML = '';
                 if (Array.isArray(result)) {
                     result.forEach(data => {
-                const tr = document.createElement('tr');
-                tr.setAttribute('id', data.courseID);
-                        if(country==='others'){
-                                                tr.innerHTML = `<td>${data.country}</td>`;
+                        const tr = document.createElement('tr');
+                        tr.setAttribute('id', data.courseID);
+                        if (country === 'others') {
+                            tr.innerHTML = `<td>${data.country}</td>`;
                         };
-                        tr.innerHTML+=`
+                        tr.innerHTML += `
                     <td id=${data.CollegeID}>${data.collegename}</td>
                     <td>${data.state}</td>
                     <td>${data.city}</td>
@@ -112,55 +128,26 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
             }
         };
 
-        const countryInput = document.getElementById('search');
-        countryInput.addEventListener('change', async () => {
-            const country = countryInput.value;
-            await fetchData(country);
 
-        });
 
-         
-        const urlParams = new URLSearchParams(window.location.search);
-        const countryParam = urlParams.get('country');
-        console.log(countryParam);
+        // console.log(countryParam);
         window.onload = async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const countryparam = {
+                country: urlParams.get('country'),
+
+            }
+            const countryParam = urlParams.get('country');
+
             await fetchData(countryParam);
         };
-        const searchInput = document.getElementById('search');
-        const stateSelect = document.getElementById('state');
-        const programSelect = document.getElementById('program');
 
-       
-        async function updateStates(country) {
-           stateSelect.innerHTML = '<option value="">Select</option>';
-            const response = await fetch(`${url}?country=${country}`);
-            const data = await response.json();
 
-            data.states.forEach(state => {
-                const option = document.createElement('option');
-                option.value = state;
-                option.textContent = state;
-                stateSelect.appendChild(option);
-            });
-        }
-
-        
         async function updateCourses(country) {
-           
-            programSelect.innerHTML = '<option value="">Select</option>';
 
-          
             const response = await fetch(`${url}?country=${country}`);
-            const data = await response.json();
-
-            data.courses.forEach(course => {
-                const option = document.createElement('option');
-                option.value = course;
-                option.textContent = course;
-                programSelect.appendChild(option);
-            });
-        }
-
+            const data = await response.json()
+        };
     </script>
 
 </body>

@@ -91,12 +91,10 @@ if(empty($key)){
                 .then(text => {
                     if (text === 'success' && key == 1) {
                         console.log('Redirecting...');
-                        // Redirect to the desired location
-                        window.location.href = '../student-home/student-home.php';
+                         window.location.href = '../student-home/student-home.php';
                     } else if (text === 'success' && key == 2) {
                         console.log('Redirecting...');
-                        // Redirect to the desired location
-                        window.location.href = '../college-home/college-home.php';
+                         window.location.href = '../college-home/college-home.php';
                     } else {
                         console.log(text);
                         document.querySelector('.error').innerHTML = "<span style='color: red;'>" + text + "</span>";

@@ -1,48 +1,174 @@
-body{
-    background-color: #f2f2f2;
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body {
+  background-color: #f2f2f2;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.content{
-    height: 30px;
-    margin-top: 0px;
-    margin-left: 20px;
-    padding: 2px;
+.content {
+  height: 30px;
+  margin-top: 0px;
+  margin-left: 20px;
+  padding: 2px;
 }
-.content h1{
-    color: #041d23;
+.content h1 {
+  color: #041d23;
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+  height: 200px;
+}
+
+.applications-table {
+  margin: 10px 70px 70px;
+  box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+}
+.tableClass {
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  white-space: nowrap;
+  background-color: white;
+}
+.tableClass td,
+.tableClass th {
+  text-align: Left;
+  padding: 8px;
+}
+.tableClass td {
+  border-right: 1px solid #f8f8f8;
+  font-size: 12px;
+}
+.tableClass thead th {
+  color: #ffffff;
+  background: #4fc3a1;
+}
+
+.tableClass thead th:nth-child(odd) {
+  color: #ffffff;
+  background: #324960;
+}
+
+.tableClass tr:nth-child(even) {
+  background: #f8f8f8;
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+  .tableClass {
+    display: block;
+    width: 100%;
+  }
+  .table-wrapper:before {
+    content: "Scroll horizontally >";
+    display: block;
+    text-align: right;
+    font-size: 11px;
+    color: white;
+    padding: 0 0 10px;
+  }
+  .tableClass thead,
+  .tableClass tbody,
+  .tableClass thead th {
+    display: block;
+  }
+  .tableClass thead th:last-child {
+    border-bottom: none;
+  }
+  .tableClass thead {
+    float: left;
+  }
+  .tableClass tbody {
+    width: auto;
+    position: relative;
+    overflow-x: auto;
+  }
+  .tableClass td,
+  .tableClass th {
+    padding: 20px 0.625em 0.625em 0.625em;
+    height: 60px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 120px;
+    font-size: 13px;
+    text-overflow: ellipsis;
+  }
+  .tableClass thead th {
+    text-align: left;
+    border-bottom: 1px solid #f7f7f9;
+  }
+  .tableClass tbody tr {
+    display: table-cell;
+  }
+  .tableClass tbody tr:nth-child(odd) {
+    background: none;
+  }
+  .tableClass tr:nth-child(even) {
+    background: transparent;
+  }
+  .tableClass tr td:nth-child(odd) {
+    background: #f8f8f8;
+    border-right: 1px solid #e6e4e4;
+  }
+  .tableClass tr td:nth-child(even) {
+    border-right: 1px solid #915a5a;
+  }
+  .tableClass tbody td {
+    display: block;
     text-align: center;
-    margin-top: 0px;
-    margin-bottom: 0px;
+  }
 }
-.main-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 10px;
-    height: 200px;
+
+/* //College Min Requirements  */
+.add-link {
+  background-color: #a35e5e;
+  position: relative;
+  z-index: 200;
+  width: 11rem;
+  text-align: center;
 }
-.status{
-   
-    background-color: #f2f2f2;
-    padding: 3px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    width: 150px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+.add-link ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background: rgb(12, 12, 77);
 }
-.status p{
-margin: 0px;
-padding: 0px;
-position: relative;
-align-items: center;
+.add-link ul li {
+  display: inline-block;
+}
+.add-link li a {
+  color: white;
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+.add-link ul ul {
+  position: absolute;
+  top: 100%;
+  display: none;
+}
+.add-link ul ul li {
+  display: block;
+}
+.add-link li:hover ul {
+  display: block;
+}
+.add-link ul ul li a:hover {
+  background-color: #555;
 }

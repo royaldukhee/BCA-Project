@@ -1,0 +1,40 @@
+body{
+    margin: 0%;
+    padding: 0%;
+    background-image: url('indexhome.jpg');
+    background-size: cover;
+    object-fit: fit;
+    backdrop-filter: 40px;
+    background-repeat: no-repeat;
+}
+nav {
+    text-align: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+nav a{
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bolder;
+    color: skyblue;
+    padding: 5px;
+    background-color: whitesmoke;
+    border-radius: 10px;
+}
+nav a:hover{
+    background-color:wheat;
+    border-radius: 20px;
+    
+}
+.main-content{
+    margin: 150px;
+    color: #cecece;
+}
+.content{
+    color: cyan;
+    font-size: 17px;
+}
+h1{
+    color:#5b5bb8 ;
+}
