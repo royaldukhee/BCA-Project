@@ -10,6 +10,7 @@
                 <ul>
                     <li><a href="../add-course/add-course.php">Add Course</a></li>
                     <li><a id="showcourse">View Courses</a></li>
+                    
                 </ul>
             </li>
             <li><a href="#">APPLICATION</a>

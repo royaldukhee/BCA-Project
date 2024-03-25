@@ -22,10 +22,11 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
 
 <body>
     <h1>Choose Your Interest</h1>
-    <!-- <div class="filter">
+    <div class="filter-section">
+    <div class="filter">
         <label for="country">Country</label>
         <input type="search" id="search" placeholder="search country">
-    </div> -->
+    </div>
     <label for="state">Filter By State</label>
     <select name="state" id="state">
         <option value="">Select</option>
@@ -34,120 +35,114 @@ if (!isset($_SESSION['studentID']) || empty($_SESSION['studentID'])) {
     <select name="program" id="program">
         <option value="">Select</option>
     </select>
+    </div>
     <h2>Popular Universities and Colleges</h2>
     <div class="university-container">
-        <div class="university-details">
-            <h4>Study BBA in university</h4>
-            <div class=course-Detials>
-                <h3>Minimun Requirements</h3>
-                <p>55% or 2.56 GPA in Higher Secondary</P>
-                <p>IELTS overall 6 not less than 5.5 in each band </p>
-                <p>PTE overall 61 not less than 55 in each score </p>
-                <h3>
-                    About Course
-                </h3>
-                <p>BBA TU</p>
-            </div>
+        <!-- University Details population -->
 
-
-            <a href="../college-course-explore/college-course-explore.php?collegeID=1">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
-                </svg>
-            </a>
-        </div>
-        <div class="university-details">
-            <h4>Study BBA in university</h4>
-            <div class=course-Detials>
-                <h3>Minimun Requirements</h3>
-                <p>55% or 2.56 GPA in Higher Secondary</P>
-                <p>IELTS overall 6 not less than 5.5 in each band </p>
-                <p>PTE overall 61 not less than 55 in each score </p>
-                <h3>
-                    About Course
-                </h3>
-                <p>BBA TU</p>
-            </div>
-
-
-            <a href="../college-course-explore/college-course-explore.php?collegeID=1">Explore <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
-                </svg>
-            </a>
-        </div>
     </div>
 
     </div>
     <script>
         const url = '../includes/college-info.inc.php';
 
-        const fetchData = async (country) => {
-            if (country !== 'others') {
-                document.querySelector('#countryColumn').style.display = 'none';
-
+    const fetchData = async (country = '', state = '', program = '') => {
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({
+                    country,
+                    state,
+                    program
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Response Error");
             }
-            try {
-                const response = await fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        country,
-                    }),
-                    headers: {
-                        "Content-Type": "application/JSON"
-                    },
+            const result = await response.json();
+            console.log(result);
+            const universitiesDetials = document.querySelector('.university-container');
+            universitiesDetials.innerHTML = '';
+            if (Array.isArray(result)) {
+                const uniqueStates = [...new Set(result.map(data => data.state))];
+                const stateDropdown = document.getElementById('state');
+                stateDropdown.innerHTML = '<option value="">Select</option>'; // Clear previous options
+                uniqueStates.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state;
+                    option.textContent = state;
+                    stateDropdown.appendChild(option);
                 });
-                if (!response.ok) {
-                    throw new Error("Response Error");
-                }
-                const result = await response.json();
-                console.log(result);
-                const tableBody = document.querySelector('#tableBody');
-                tableBody.innerHTML = '';
-                if (Array.isArray(result)) {
-                    result.forEach(data => {
-                        const tr = document.createElement('tr');
-                        tr.setAttribute('id', data.courseID);
-                        if (country === 'others') {
-                            tr.innerHTML = `<td>${data.country}</td>`;
-                        };
-                        tr.innerHTML += `
-                    <td id=${data.CollegeID}>${data.collegename}</td>
-                    <td>${data.state}</td>
-                    <td>${data.city}</td>
-                    <td>${data.coursename}</td>
-                    <td>${data.level}</td>
-                    <td>${data.duration} Semester</td>
-                    <td>${data.course_fee}</td>
-                    <td><button id=${data.courseID}>View</button></td>`;
-                        tableBody.appendChild(tr);
-                    });
-                } else {
-                    console.log("Invalid response format: expected an array");
-                }
-            } catch (error) {
-                console.log("Error Occurred", error);
+                const uniquePrograms = [...new Set(result.map(data => data.coursename))];
+                const programDropdown = document.getElementById('program');
+                programDropdown.innerHTML = '<option value="">Select</option>'; // Clear previous options
+                uniquePrograms.forEach(program => {
+                    const option = document.createElement('option');
+                    option.value = program;
+                    option.textContent = program;
+                    programDropdown.appendChild(option);
+                });
+
+                result.forEach(data => {
+                    const academicRequirements = data.academic_requirements.split(',').map(req => req.trim());
+                    const englishRequirements = data.english_requirements.split(',').map(req => req.trim());
+
+                    universitiesDetials.innerHTML +=
+                        ` <div class="university-details">
+                            <h2>Study ${data.coursename} in ${data.collegename}</h2>
+                            <div class="course-details">
+                                <h3>Minimum Requirements</h3>
+                                <p>${academicRequirements.join(', ')}</p>
+                                <p>${englishRequirements.join(', ')}</p>
+                            </div>
+                            <a href="../college-course-explore/college-course-explore.php?collegeID=${data.collegeID}&courseID=${data.courseID}">Explore 
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M313.941 216H12c-6.627 0-12 5.373-12 12v56c0 6.627 5.373 12 12 12h301.941v46.059c0 21.382 25.851 32.09 40.971 16.971l86.059-86.059c9.373-9.373 9.373-24.569 0-33.941l-86.059-86.059c-15.119-15.119-40.971-4.411-40.971 16.971V216z"></path>
+                                </svg>
+                            </a>
+                        </div>`;
+                });
+            } else {
+                console.log("Invalid response format: expected an array");
             }
-        };
+        } catch (error) {
+            console.log("Error Occurred", error);
+        }
+    };
 
+    window.onload = async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const countryParam = urlParams.get('country');
 
+        await fetchData(countryParam);
+    };
 
-        // console.log(countryParam);
-        window.onload = async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const countryparam = {
-                country: urlParams.get('country'),
+    document.querySelector('#search').addEventListener('change', searchByCountry);
 
-            }
-            const countryParam = urlParams.get('country');
+    function searchByCountry() {
+        const search = document.querySelector('#search').value;
+        fetchData(search);
+    }
 
-            await fetchData(countryParam);
-        };
+    document.querySelector('#state').addEventListener('change', searchByState);
 
+    function searchByState() {
+        const state = document.querySelector('#state').value;
+        const country = document.querySelector('#search').value; // Get country from search input
+        fetchData(country, state);
+    }
 
-        async function updateCourses(country) {
+    document.querySelector('#program').addEventListener('change', searchByProgram);
 
-            const response = await fetch(`${url}?country=${country}`);
-            const data = await response.json()
-        };
+    function searchByProgram() {
+        const program = document.querySelector('#program').value;
+        const country = document.querySelector('#search').value; // Get country from search input
+        const state = document.querySelector('#state').value;
+        fetchData(country, state, program);
+    }
     </script>
 
 </body>

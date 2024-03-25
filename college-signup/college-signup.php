@@ -78,8 +78,8 @@
 
             const collegename = document.querySelector('#collegename').value;
             const email = document.querySelector('#email').value;
-            const country = document.querySelector('#country').value;
-            const state = document.querySelector('#state').value;
+            const country = document.querySelector('#country').value.toLowerCase();
+            const state = document.querySelector('#state').value.toLowerCase;
             const city = document.querySelector('#city').value;
             const password = document.querySelector('#password').value;
             const repass = document.querySelector('#re-password').value;

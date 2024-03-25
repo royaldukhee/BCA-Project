@@ -23,7 +23,7 @@ if (!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID'])) {
             <h1>Welcome to College Home</h1>
         </div>
         <!-- min req section -->
-        <div class="add-link">
+        <!-- <div class="add-link">
         <ul>
            <li><a href="#">Min Requirements</a>
                 <ul>
@@ -33,7 +33,7 @@ if (!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID'])) {
             </li>
             
         </ul>
-        </div>
+        </div> -->
         <div class="main-container">
             <div class="status">
 
