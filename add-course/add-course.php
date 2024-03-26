@@ -573,12 +573,15 @@ if (!isset($_SESSION['collegeID']) || empty($_SESSION['collegeID'])) {
                             throw new Error("Network Error");
                         } else {
                             const result = await response.text();
+                            console.log(result);
                             if (result === "success") {
                                 alert("Course Added Successfully");
                                 window.location.href = "../college-home/college-home.php";
                             } else {
-                                console.log(result);
-                                alert("problem with your fetch operation");
+                                // console.log(result);
+                                alert(result);
+                                window.location.href = "../college-home/college-home.php";
+
                             }
                         }
                     } catch (error) {
